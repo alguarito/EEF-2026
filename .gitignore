@@ -1,0 +1,17 @@
+# EEF 2026 - Git Ignore
+# No subir archivos pesados para mantener el repositorio liviano (GitHub Pages)
+
+# Contenidos binarios
+CONTENIDOS /
+*.mp4
+*.pptx
+*.m4a
+*.pdf
+
+# Archivos de sistema y logs
+.DS_Store
+*.log
+
+# Otros
+artifacts/
+scratch/
