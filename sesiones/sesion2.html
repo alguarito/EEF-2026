@@ -16,125 +16,150 @@
                     <img src="../IMAGENES/LOGOUTP.png" alt="Logo UTP" id="logo-utp">
                     <img src="../IMAGENES/LOGOEEF.png" alt="Logo EEF" id="logo-eef">
                 </div>
+                
                 <ul class="nav-links">
                     <li><a href="../index.html">Inicio</a></li>
-                    <li><a href="sesion1.html">Sesión Anterior</a></li>
+                    <li class="dropdown">
+                        <a href="#">Sesiones <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="sesion1.html">S1: Fundamentos de IA</a></li>
+                            <li><a href="sesion2.html">S2: El Aula Ubicua (Wix)</a></li>
+                            <li><a href="#">S3: Síntesis Documental</a></li>
+                            <li><a href="#">S4: Estructuring Visual</a></li>
+                            <li><a href="#">S5: Agentes Interactivos</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../index.html#recursos">Recursos</a></li>
+                    <li><a href="../index.html#contacto">Contacto</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <main class="session-page">
-        <section class="hero-session glass">
+    <main>
+        <!-- Hero Section Masterpiece Style -->
+        <section class="session-hero hero" style="padding: 6rem 0 4rem;">
             <div class="container">
-                <span class="session-badge">Módulo 1: Ecosistemas</span>
-                <h1>Sesión 2: <span class="highlight">Arquitecturas de Aprendizaje</span></h1>
-                <p>Construyendo el Aula Ubicua mediante Wix como epicentro de la estrategia pedagógica IA.</p>
+                <div class="module-number">Experiencia Maestra 02</div>
+                <h1>Arquitecturas de Aprendizaje: El Aula Ubicua</h1>
+                <p>Del "Chat" al "Entorno": Construyendo el epicentro educativo portátil y asincrónico mediante Wix.</p>
             </div>
         </section>
 
-        <section class="innovation-thread">
-            <div class="container">
+        <section class="container">
+            <div class="learning-path">
                 <div class="innovation-path">
                     
                     <!-- FASE 1: IDENTIFICAR -->
-                    <div class="innovation-step active">
-                        <div class="step-content">
-                            <span class="phase-badge">Fase 1: Identificar</span>
-                            <h3>El Salto Hacia la Ubicuidad</h3>
-                            <p>En esta fase, identificamos que el aula física ya no es el único contenedor del conocimiento. La IA de Google nos permite crear entornos que funcionan 24/7.</p>
-                            
-                            <div class="grid" style="margin-top: 2rem; grid-template-columns: 1.5fr 1fr;">
-                                <div class="media-wrapper">
-                                    <!-- YouTube Embed Placeholder -->
-                                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: var(--radius-md); background: #000;">
-                                        <iframe 
-                                            src="https://www.youtube.com/embed/VIDEO_ID_HERE" 
-                                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" 
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                            allowfullscreen>
-                                        </iframe>
-                                    </div>
-                                    <div class="media-caption" style="text-align: center;">
-                                        <div class="attention-capsule" style="margin-bottom: 1rem;">
-                                            <i class="fas fa-video"></i> <strong>Video de Introducción:</strong> Esperando enlace del docente...
-                                        </div>
-                                    </div>
+                    <div class="learning-step">
+                        <span class="step-label">Fase 1: Identificar (Ecosistemas)</span>
+                        <h2>La Ruptura de las Paredes del Aula</h2>
+                        <p>¿Qué sucede cuando el aula deja de ser un lugar físico y se convierte en un flujo constante de información? Identificamos la necesidad de centralizar la inteligencia.</p>
+                        
+                        <div class="grid" style="grid-template-columns: 1.5fr 1fr; gap: 2.5rem; margin-top: 2rem;">
+                            <div class="media-wrapper">
+                                <!-- YouTube Embed -->
+                                <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: var(--radius-md); background: #000;">
+                                    <iframe 
+                                        src="https://www.youtube.com/embed/VIDEO_ID_WAITING" 
+                                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen>
+                                    </iframe>
                                 </div>
-
-                                <div class="info-box">
-                                    <div class="insight-card">
-                                        <i class="fas fa-cloud-sun fa-2x"></i>
-                                        <h4>Concepto de Aula Ubicua</h4>
-                                        <p>Un espacio donde el aprendizaje no depende del tiempo ni del lugar, centralizando recursos IA para consulta constante.</p>
+                                <div class="media-caption">
+                                    <div class="attention-capsule">
+                                        <i class="fas fa-lightbulb"></i> <strong>Cápsula de Visión:</strong> La ubicuidad no es "estar conectado", es tener el aula en el bolsillo del estudiante.
                                     </div>
+                                    <a href="#" target="_blank" class="btn-secondary" style="margin-top: 1rem; width: 100%; text-align: center;">
+                                        <i class="fab fa-youtube"></i> Ver Introducción en Pantalla Completa
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="info-box" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                                <div class="insight-card">
+                                    <i class="fas fa-network-wired fa-2x"></i>
+                                    <h4>Del Caos al Nodo</h4>
+                                    <p>Pasamos de tener archivos dispersos en WhatsApp o correos a un **Nodo Central de Inteligencia** accesible 24/7.</p>
+                                </div>
+                                <div class="attention-capsule" style="background: rgba(51, 181, 229, 0.05); border-color: var(--color-primary);">
+                                    <strong>Insight del Agente:</strong> En la enseñanza de la física, visualizar sistemas dinámicos requiere un entorno estable, no solo un chat efímero.
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- FASE 2: BUSCAR -->
-                    <div class="innovation-step">
-                        <div class="step-content">
-                            <span class="phase-badge">Fase 2: Buscar (Arquitectura Wix)</span>
-                            <h3>El Mapa en la Nube</h3>
-                            <p>Exploramos Wix como la herramienta de arquitectura donde centralizaremos los hilos cognitivos generados con IA.</p>
-                            
-                            <div class="action-grid" style="margin-top: 2rem;">
+                    <div class="learning-step">
+                        <span class="step-label">Fase 2: Buscar (Estrategia Wix)</span>
+                        <h2>Arquitectura Web para Docentes</h2>
+                        <p>Exploramos Wix como el aliado del docente-arquitecto. Buscamos modelos de diseño que prioricen la claridad cognitiva y la facilidad de uso para el joven de 2026.</p>
+                        
+                        <div class="content-wrapper" style="margin-top: 2rem;">
+                            <div class="action-grid">
                                 <!-- Presentation Card 1 -->
                                 <div class="card glass presentation-card">
                                     <i class="fas fa-file-powerpoint fa-3x" style="color: #D83B01; margin-bottom: 1rem;"></i>
-                                    <h3>Filosofía de Ubicuidad</h3>
-                                    <p>Fundamentos teóricos para romper las barreras del aula.</p>
-                                    <a href="#" target="_blank" class="btn-primary">Esperando Enlace <i class="fas fa-clock"></i></a>
+                                    <h3>Filosofía Ubicua</h3>
+                                    <p style="margin-bottom: 1.5rem;">Fundamentos teóricos para romper las barreras del tiempo escolar.</p>
+                                    <a href="#" target="_blank" class="btn-primary">Explorar Material <i class="fas fa-external-link-alt"></i></a>
                                 </div>
 
                                 <!-- Presentation Card 2 -->
                                 <div class="card glass presentation-card">
                                     <i class="fas fa-laptop-code fa-3x" style="color: #333; margin-bottom: 1rem;"></i>
-                                    <h3>Guía de Montaje en Wix</h3>
-                                    <p>Paso a paso para la creación del nodo central del curso.</p>
-                                    <a href="#" target="_blank" class="btn-primary">Esperando Enlace <i class="fas fa-clock"></i></a>
+                                    <h3>Guía técnica Wix</h3>
+                                    <p style="margin-bottom: 1.5rem;">Domina el editor de Wix para centralizar tus recursos IA.</p>
+                                    <a href="#" target="_blank" class="btn-primary">Ver Tutorial <i class="fas fa-external-link-alt"></i></a>
                                 </div>
+                            </div>
+                            
+                            <div class="insight-card" style="margin-top: 2rem;">
+                                <h3><i class="fas fa-layer-group"></i> Componentes del Nodo Central</h3>
+                                <ul style="padding-left: 1.2rem; margin-top: 1rem; font-size: 1rem;">
+                                    <li><strong>Centralización Asincrónica:</strong> Videos y guías disponibles en cualquier momento.</li>
+                                    <li><strong>Interfaz de IA:</strong> Inserción de chatbots personalizados directamente en el sitio.</li>
+                                    <li><strong>Curaduría Global:</strong> Enlaces a laboratorios virtuales PhET integrados en la arquitectura.</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
 
                     <!-- FASE 3: INFUNDIR -->
-                    <div class="innovation-step">
-                        <div class="step-content">
-                            <span class="phase-badge" style="background: rgba(251, 192, 45, 0.1); color: #FBC02D;">Fase 3: Infundir (Excelencia Global)</span>
-                            <h3>Democratización y Acceso</h3>
-                            <p>Infundimos el currículo con la visión de la **Justicia Educativa**. El aula ubicua garantiza que ningún estudiante se quede atrás por falta de presencia física.</p>
-                            
-                            <div class="grid" style="margin-top: 2rem;">
-                                <div class="card glass phase-card">
-                                    <h4><i class="fas fa-balance-scale"></i> Dimensión Ética</h4>
-                                    <p>¿Cómo garantiza la ubicuidad la equidad en el aprendizaje? Reflexión sobre la brecha digital y la autoría docente en espacios abiertos.</p>
-                                </div>
-                                <div class="card glass phase-card">
-                                    <h4><i class="fas fa-globe"></i> Estándares Mundiales</h4>
-                                    <p>Integración de los marcos de la UNESCO sobre el aprendizaje móvil y abierto asistido por IA.</p>
-                                </div>
+                    <div class="learning-step">
+                        <span class="step-label" style="background: rgba(251, 192, 45, 0.1); color: #FBC02D;">Fase 3: Infundir (Equidad)</span>
+                        <h2>Democratización del Saber</h2>
+                        <p>La ubicuidad no es solo técnica, es un acto de **Justicia Educativa**. Infundimos la visión de un saber sin muros, accesible para aquel que no puede estar físicamente.</p>
+                        
+                        <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+                            <div class="card glass" style="border-left: 5px solid #FBC02D; padding: 2rem;">
+                                <h4>Inclusión Radical</h4>
+                                <p>Eliminamos la barrera de la "exclusividad presencial". El sitio permite que el aprendizaje continúe a pesar de los desafíos geográficos o económicos.</p>
+                            </div>
+                            <div class="card glass" style="border-left: 5px solid var(--color-primary); padding: 2rem;">
+                                <h4>Ética de la Ubicuidad</h4>
+                                <p>Reflexionamos sobre la responsabilidad del docente de estar "presente" de forma mediada y asincrónica en la vida del estudiante.</p>
                             </div>
                         </div>
                     </div>
 
                     <!-- FASE 4: CONSTRUIR -->
-                    <div class="innovation-step">
-                        <div class="step-content">
-                            <span class="phase-badge" style="background: rgba(52, 168, 83, 0.1); color: #34A853;">Fase 4: Construir Agente</span>
-                            <h3>Lanzamiento del Nodo Central</h3>
-                            <p>Es hora de construir. El entregable de esta sesión es el esqueleto de tu sitio web de Wix conectado a tu ecosistema de recursos.</p>
-                            
-                            <div class="checklist-box glass">
-                                <h3>Checkpoint de Construcción:</h3>
-                                <ul class="checklist">
-                                    <li><i class="far fa-square"></i> Registro y selección de plantilla en Wix.</li>
-                                    <li><i class="far fa-square"></i> Creación de la sección "Recursos IA" (Links a YouTube/OneDrive).</li>
-                                    <li><i class="far fa-square"></i> Integración del primer Agente de IA como tutor del sitio.</li>
-                                    <li><i class="far fa-square"></i> Verificación de acceso móvil del sitio Wix.</li>
-                                </ul>
+                    <div class="learning-step">
+                        <span class="step-label" style="background: rgba(142, 36, 170, 0.1); color: #8E24AA;">Fase 4: Construir (Estrategia)</span>
+                        <h2>Tu Aula en la Nube: El Lanzamiento</h2>
+                        <p>Es momento de convertirte en Arquitecto. El producto de esta sesión es el esqueleto funcional de tu sitio Wix como sede de tu Aula Ubicua.</p>
+                        
+                        <div class="checklist-box glass" style="margin-top: 2rem; padding: 2rem;">
+                            <h3>Hitos de Construcción:</h3>
+                            <ul class="checklist" style="list-style: none; padding: 0;">
+                                <li style="margin-bottom: 1rem;"><i class="far fa-square"></i> Diseño de la estructura: Home, Temas, Recursos, Ayuda IA.</li>
+                                <li style="margin-bottom: 1rem;"><i class="far fa-square"></i> Vinculación del Ecosistema: Botones a OneDrive y YouTube.</li>
+                                <li style="margin-bottom: 1rem;"><i class="far fa-square"></i> Prueba de navegación móvil (Ubicuidad en el celular).</li>
+                                <li style="margin-bottom: 1rem;"><i class="far fa-square"></i> Publicación del Nodo Central y envío al Agente Explorador.</li>
+                            </ul>
+                            <div class="attention-capsule" style="margin-top: 1.5rem; text-align: center;">
+                                <i class="fas fa-rocket"></i> <strong>Punto de Partida:</strong> No busques la perfección, busca la funcionalidad y el acceso.
                             </div>
                         </div>
                     </div>
@@ -142,13 +167,34 @@
                 </div>
             </div>
         </section>
+
+        <!-- SECCIÓN DE FEEDBACK FINAL -->
+        <section class="container" style="padding-bottom: 6rem;">
+            <div class="glass" style="padding: 2.5rem; border-radius: var(--radius-lg); text-align: center;">
+                <h2>¿Listo para pasar al siguiente nivel?</h2>
+                <p style="margin-bottom: 2rem;">Una vez tengas tu link de Wix, estaremos listos para la Sesión 3: Síntesis Documental.</p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="sesion3.html" class="btn-primary" style="opacity: 0.5; pointer-events: none;">Siguiente Sesión: NotebookLM (Pronto)</a>
+                    <a href="../index.html" class="btn-secondary">Volver al Inicio</a>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer class="glass">
         <div class="container">
-            <p>&copy; 2026 EEF-UTP | Sesión 2: Arquitecturas de Aprendizaje</p>
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <img src="../IMAGENES/LOGOEEF.png" alt="EEF Logo" height="35">
+                    <p style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.7;">Especialización en la Enseñanza de la Física - UTP</p>
+                </div>
+                <div class="footer-bottom" style="border: 0; padding: 0;">
+                    <p style="font-size: 0.8rem; opacity: 0.5;">&copy; 2026 Ecosistema Digital EEF | Propiedad Intelectual UTP</p>
+                </div>
+            </div>
         </div>
     </footer>
 
+    <script src="../app.js"></script>
 </body>
 </html>
