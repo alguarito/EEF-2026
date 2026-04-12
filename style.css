@@ -615,3 +615,78 @@ footer {
     background: #FF0000; /* Color YouTube */
     color: var(--color-white);
 }
+
+/* ==========================================================================
+   RESPONSIVIDAD MÓVIL (MEDIA QUERIES)
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    /* Ajustes Generales */
+    .container {
+        padding: 0 1.5rem;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    /* Forzar apilamiento de Grids */
+    .grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem;
+    }
+
+    /* Sesión 1: Hilo de Innovación */
+    .innovation-path {
+        padding-left: 1rem;
+        margin-left: 0.5rem;
+    }
+
+    .innovation-step {
+        padding-left: 2rem;
+    }
+
+    .innovation-step::before {
+        left: -8px;
+        width: 16px;
+        height: 16px;
+    }
+
+    /* Media Wrapper (Video y Contexto) */
+    .media-wrapper {
+        margin-bottom: 1rem;
+    }
+
+    /* Tarjetas de Fase */
+    .phase-card {
+        padding: 1.5rem;
+    }
+
+    .phase-badge {
+        font-size: 0.7rem;
+    }
+
+    /* Biblioteca de Recursos */
+    .resource-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Navegación */
+    .nav-links {
+        display: none; /* Mejorado por JS si hay menú hamburguesa, o simplificado aquí */
+    }
+}
+
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+
+    .module-number {
+        font-size: 0.7rem;
+    }
+
+    .innovation-step h3 {
+        font-size: 1.1rem;
+    }
+}
