@@ -616,6 +616,31 @@ footer {
     color: var(--color-white);
 }
 
+/* Grilla de Acciones (Presentaciones) */
+.action-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.presentation-card {
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.presentation-card i {
+    margin-bottom: 1rem;
+}
+
+.presentation-card h3 {
+    margin-bottom: 1rem;
+}
+
 /* ==========================================================================
    RESPONSIVIDAD MÓVIL (MEDIA QUERIES)
    ========================================================================== */
@@ -623,57 +648,58 @@ footer {
 @media (max-width: 768px) {
     /* Ajustes Generales */
     .container {
-        padding: 0 1.5rem;
+        padding: 0 1.2rem;
     }
 
     .section-title {
         font-size: 1.8rem;
+        margin-bottom: 2.5rem;
     }
 
     /* Forzar apilamiento de Grids */
-    .grid {
+    .grid, .action-grid {
         grid-template-columns: 1fr !important;
         gap: 1.5rem;
     }
 
     /* Sesión 1: Hilo de Innovación */
     .innovation-path {
-        padding-left: 1rem;
-        margin-left: 0.5rem;
+        padding-left: 0.5rem;
+        margin-left: 0;
+        border-left: 3px solid rgba(51, 181, 229, 0.1);
     }
 
     .innovation-step {
-        padding-left: 2rem;
+        padding-left: 1.5rem;
+        margin-bottom: 3rem;
+        position: relative;
     }
 
     .innovation-step::before {
-        left: -8px;
-        width: 16px;
-        height: 16px;
+        left: -11px;
+        width: 18px;
+        height: 18px;
+        top: 0;
+    }
+
+    .learning-step {
+        padding: 1.5rem 0;
     }
 
     /* Media Wrapper (Video y Contexto) */
     .media-wrapper {
-        margin-bottom: 1rem;
+        margin-bottom: 2rem;
     }
 
     /* Tarjetas de Fase */
     .phase-card {
         padding: 1.5rem;
-    }
-
-    .phase-badge {
-        font-size: 0.7rem;
+        margin-bottom: 1rem;
     }
 
     /* Biblioteca de Recursos */
     .resource-grid {
         grid-template-columns: 1fr !important;
-    }
-
-    /* Navegación */
-    .nav-links {
-        display: none; /* Mejorado por JS si hay menú hamburguesa, o simplificado aquí */
     }
 }
 
