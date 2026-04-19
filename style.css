@@ -656,6 +656,14 @@ footer {
         margin-bottom: 2.5rem;
     }
 
+    .hero {
+        padding: 6rem 0 3rem; /* Ajuste para compensar el header sticky */
+    }
+
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+
     /* Forzar apilamiento de Grids */
     .grid, .action-grid {
         grid-template-columns: 1fr !important;
@@ -663,32 +671,24 @@ footer {
     }
 
     /* Sesión 1: Hilo de Innovación */
-    .innovation-path {
-        padding-left: 0.5rem;
-        margin-left: 0;
-        border-left: 3px solid rgba(51, 181, 229, 0.1);
-    }
-
-    .innovation-step {
-        padding-left: 1.5rem;
-        margin-bottom: 3rem;
-        position: relative;
-    }
-
-    .innovation-step::before {
-        left: -11px;
-        width: 18px;
-        height: 18px;
-        top: 0;
+    .learning-path::before {
+        left: 15px; /* Ajuste fino de la línea */
     }
 
     .learning-step {
-        padding: 1.5rem 0;
+        padding-left: 45px; /* Preserva espacio para el timeline */
+        margin-bottom: 2.5rem; /* Reduce espacio excesivo */
+    }
+
+    .learning-step::before {
+        left: 6px; /* Re-centrar dots en móvil */
+        width: 18px;
+        height: 18px;
     }
 
     /* Media Wrapper (Video y Contexto) */
     .media-wrapper {
-        margin-bottom: 2rem;
+        margin-bottom: 1.5rem;
     }
 
     /* Tarjetas de Fase */
