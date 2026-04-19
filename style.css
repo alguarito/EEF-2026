@@ -505,6 +505,12 @@ footer {
     overflow: hidden;
     line-height: 0;
     box-shadow: var(--shadow-md);
+    position: relative;
+    z-index: 5;
+}
+
+.media-wrapper iframe {
+    pointer-events: auto;
 }
 
 .media-caption {
