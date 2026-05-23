@@ -21,14 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Scrolled Header Effect
+    // Scrolled Header Effect - TOGGLE CLASS FOR PREMIUM CSS TRANSITION
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            header.style.padding = '0.5rem 0';
-            header.style.background = 'rgba(255, 255, 255, 0.95)';
+        if (window.scrollY > 30) {
+            header.classList.add('scrolled');
         } else {
-            header.style.padding = '1rem 0';
-            header.style.background = 'rgba(255, 255, 255, 0.8)';
+            header.classList.remove('scrolled');
         }
     });
 
