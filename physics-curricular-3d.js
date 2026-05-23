@@ -1,5 +1,5 @@
 // ==========================================================================
-// 3D CURRICULAR TOPOLOGY MESH SIMULATOR (Three.js WebGL)
+// 3D QUANTUM PARTICLE NEBULA SIMULATOR (Three.js WebGL)
 // Especialización en la Enseñanza de la Física - UTP
 // ==========================================================================
 
@@ -12,57 +12,78 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Scene, Camera, Renderer Setup ---
     const scene = new THREE.Scene();
     
-    // Perspective Camera tilted slightly for depth perception
-    const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 100);
-    camera.position.set(0, -8, 12);
-    camera.lookAt(0, 1.5, 0);
+    // Perspective Camera focusing on the curriculum board plane
+    const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+    camera.position.set(0, 0, 15);
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
-    // --- Geometry & Materials (Topological Mesh + Node Points) ---
-    // Fine-tuned grid segments for high performance and sharp details
-    const segmentsX = 40;
-    const segmentsY = 30;
-    const gridWidth = 38;
-    const gridHeight = 28;
-    const geometry = new THREE.PlaneGeometry(gridWidth, gridHeight, segmentsX, segmentsY);
+    // --- Quantum Particle Field Setup ---
+    const particleCount = 2000;
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(particleCount * 3);
+    const colors = new Float32Array(particleCount * 3);
+    const initialState = []; // Track resting position & velocities
 
-    // Clean cyan wireframe material for sci-fi scientific holographic grid
-    const meshMaterial = new THREE.MeshBasicMaterial({
-        color: 0x33B5E5, // Cian EEF / UTP
-        wireframe: true,
-        transparent: true,
-        opacity: 0.14,
-        depthWrite: false
-    });
-    const gridMesh = new THREE.Mesh(geometry, meshMaterial);
-    scene.add(gridMesh);
+    // Clean color palette matching the first segment (Cian, Blue, and Light Cyan exclusively)
+    const colorScheme = [
+        new THREE.Color(0x33B5E5), // Cian EEF / UTP
+        new THREE.Color(0x003D6D), // Azul UTP
+        new THREE.Color(0x8AD2F0)  // Lighter Cyan Glow
+    ];
 
-    // Glowing blue node points (matching the first segment) at each grid intersection
+    for (let i = 0; i < particleCount; i++) {
+        // Distribute particles in a loose, wavy horizontal particle nebula
+        const x = (Math.random() - 0.5) * 40;
+        const y = (Math.random() - 0.5) * 20;
+        const z = (Math.random() - 0.5) * 6;
+
+        positions[i * 3] = x;
+        positions[i * 3 + 1] = y;
+        positions[i * 3 + 2] = z;
+
+        // Assign a random quantum color from the UTP cian-blue spectrum
+        const randColor = colorScheme[Math.floor(Math.random() * colorScheme.length)];
+        colors[i * 3] = randColor.r;
+        colors[i * 3 + 1] = randColor.g;
+        colors[i * 3 + 2] = randColor.b;
+
+        // Store custom velocity & rest state
+        initialState.push({
+            restX: x,
+            restY: y,
+            restZ: z,
+            vx: 0,
+            vy: 0,
+            vz: 0,
+            angle: Math.random() * Math.PI * 2,
+            speed: 0.05 + Math.random() * 0.05
+        });
+    }
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+    // Glow circle points texture
     const pointsMaterial = new THREE.PointsMaterial({
-        color: 0x003D6D, // Azul UTP (matching the first block)
-        size: 0.08,
+        size: 0.12,
+        vertexColors: true,
         transparent: true,
-        opacity: 0.5,
+        opacity: 0.6,
         depthWrite: false
     });
-    const gridPoints = new THREE.Points(geometry, pointsMaterial);
-    scene.add(gridPoints);
 
-    // --- Interactive Coordinates & Physics Setup ---
-    const targetMouse3D = new THREE.Vector3(999, 999, 0); // Offscreen initially
-    const lerpedMouse3D = new THREE.Vector3(999, 999, 0);
-    let isHovered = false;
+    const particleSystem = new THREE.Points(geometry, pointsMaterial);
+    scene.add(particleSystem);
+
+    // --- Interactive Attraction Physics Setup ---
+    let attractorTarget3D = new THREE.Vector3(0, 0, -999); // Offscreen initially
+    let lerpedAttractor3D = new THREE.Vector3(0, 0, -999);
+    let isAttracting = false;
     let activeCardIndex = -1;
-
-    // Relative mouse vectors for subtle section parallax tilt
-    let targetRotationX = -0.5; // baseline tilt
-    let targetRotationY = 0.0;
-    let currentRotationX = -0.5;
-    let currentRotationY = 0.0;
 
     // Map DOM 2D coordinate space of a hovered card into WebGL 3D space
     function mapCardTo3D(cardElement) {
@@ -79,29 +100,29 @@ document.addEventListener('DOMContentLoaded', () => {
         const ndcX = (pixelX / canvasRect.width) * 2 - 1;
         const ndcY = -(pixelY / canvasRect.height) * 2 + 1;
 
-        // Project from screen space into 3D world space at z = 0
+        // Project back from screen space into 3D world space at z = 0
         const tempVector = new THREE.Vector3(ndcX, ndcY, 0.5);
         tempVector.unproject(camera);
         
-        // Intersect projection ray with the Z = 0 plane where the mesh lives
+        // Calculate projection vector on the XY plane (where our particles live)
         const dir = tempVector.sub(camera.position).normalize();
         const distance = -camera.position.z / dir.z;
-        targetMouse3D.copy(camera.position).add(dir.multiplyScalar(distance));
+        attractorTarget3D.copy(camera.position).add(dir.multiplyScalar(distance));
         
-        // Offset slightly forward in 3D for visible elevation peak
-        targetMouse3D.z = 0;
+        // Set slightly behind the card plane in 3D
+        attractorTarget3D.z = -1.5;
     }
 
     // Attach hover listeners to all session cards
     sessionCards.forEach((card, idx) => {
         card.addEventListener('mouseenter', () => {
-            isHovered = true;
+            isAttracting = true;
             activeCardIndex = idx;
             mapCardTo3D(card);
             
-            // If it was previously offscreen, snap it close first to avoid massive jumps
-            if (lerpedMouse3D.x > 900) {
-                lerpedMouse3D.copy(targetMouse3D);
+            // If it was previously offscreen, snap it close first
+            if (lerpedAttractor3D.z < -100) {
+                lerpedAttractor3D.copy(attractorTarget3D);
             }
         });
 
@@ -114,24 +135,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Reset attractor on section leave
     modulesSection.addEventListener('mouseleave', () => {
-        isHovered = false;
+        isAttracting = false;
         activeCardIndex = -1;
-        targetMouse3D.set(999, 999, 0); // push offscreen
-        targetRotationX = -0.5; // reset tilt
-        targetRotationY = 0.0;
+        attractorTarget3D.set(0, 0, -999); // push attractor away
     });
 
-    // Capture mouse movements over the section for camera/grid parallax tilting
-    modulesSection.addEventListener('mousemove', (event) => {
-        const rect = modulesSection.getBoundingClientRect();
-        const px = (event.clientX - rect.left) / rect.width - 0.5;
-        const py = (event.clientY - rect.top) / rect.height - 0.5;
-        
-        targetRotationX = -0.5 - py * 0.12;
-        targetRotationY = px * 0.12;
-    });
-
-    // --- Performance Optimization: Viewport Visibility Check ---
+    // --- Performance Optimization: Viewport Frustum Visibility Check ---
     let isCurricularInViewport = true;
     let isHeroInViewport = true;
 
@@ -156,54 +165,90 @@ document.addEventListener('DOMContentLoaded', () => {
     function animate() {
         requestAnimationFrame(animate);
 
-        // Performance check: stop render loop when not visible in screen view
+        // performance check: stop loops if not visible in screen view
         if (!isCurricularInViewport) return;
 
         const time = clock.getElapsedTime();
+        const positionsAttr = geometry.attributes.position;
 
-        // 1. Smoothly interpolate topological peak target coordinate (inertia weight)
-        lerpedMouse3D.lerp(targetMouse3D, 0.08);
-
-        // 2. Smoothly interpolate grid tilting (parallax)
-        currentRotationX += (targetRotationX - currentRotationX) * 0.05;
-        currentRotationY += (targetRotationY - currentRotationY) * 0.05;
-        
-        gridMesh.rotation.x = currentRotationX;
-        gridMesh.rotation.z = currentRotationY;
-        gridPoints.rotation.x = currentRotationX;
-        gridPoints.rotation.z = currentRotationY;
-
-        // 3. Deform grid geometry vertices (harmonic waves + elevating milestone peaks)
-        const positionAttribute = geometry.attributes.position;
-        const peakHeight = 2.0; // Height of the upward relief mountain
-        const peakRange = 5.2;  // Radius of the hill elevation
-
-        for (let i = 0; i < positionAttribute.count; i++) {
-            const x = positionAttribute.getX(i);
-            const y = positionAttribute.getY(i);
-
-            // A: Gentle scientific harmonic waves (topological terrain breathing)
-            const wave1 = Math.sin(x * 0.25 - time * 0.7) * Math.cos(y * 0.25 - time * 0.7) * 0.22;
-            const wave2 = Math.cos(Math.sqrt(x*x + y*y) * 0.15 - time * 1.0) * 0.12;
-            const baseZ = wave1 + wave2;
-
-            // B: Uplifting milestone peak (Einstein inverted gravity well/relief hill)
-            let peakZ = 0;
-            if (isHovered && lerpedMouse3D.x < 900) {
-                const distToMouse = Math.sqrt((x - lerpedMouse3D.x)**2 + (y - lerpedMouse3D.y)**2);
-                if (distToMouse < peakRange) {
-                    const t = distToMouse / peakRange;
-                    // Smooth bell-curve mountain deformation: Height * (1 - t^2)^2
-                    peakZ = peakHeight * Math.pow(1.0 - t*t, 2);
-                }
-            }
-
-            // Apply total deformation on Z axis
-            positionAttribute.setZ(i, baseZ + peakZ);
+        // 1. Smoothly interpolate attractor position (inertia lag)
+        if (isAttracting) {
+            lerpedAttractor3D.lerp(attractorTarget3D, 0.1);
+        } else {
+            lerpedAttractor3D.lerp(attractorTarget3D, 0.06);
         }
 
-        // Notify Three.js that vertices have mutated to re-upload to GPU
-        positionAttribute.needsUpdate = true;
+        // Attraction / physics parameters
+        const pullRadius = 5.2; // Distance of vortex influence
+
+        for (let i = 0; i < particleCount; i++) {
+            let px = positionsAttr.getX(i);
+            let py = positionsAttr.getY(i);
+            let pz = positionsAttr.getZ(i);
+            
+            const state = initialState[i];
+
+            // Wavy background quantum noise (relaxing wave state)
+            const waveX = Math.sin(state.angle + time * state.speed) * 0.02;
+            const waveY = Math.cos(state.angle * 0.7 + time * state.speed) * 0.02;
+
+            if (isAttracting && lerpedAttractor3D.z > -100) {
+                // Calculate vector to the active card attractor
+                const dx = lerpedAttractor3D.x - px;
+                const dy = lerpedAttractor3D.y - py;
+                const dz = lerpedAttractor3D.z - pz;
+                const dist = Math.sqrt(dx*dx + dy*dy + dz*dz);
+
+                if (dist < pullRadius) {
+                    // Particle is within the magnetic field pull radius!
+                    // 1. Attraction Force (pull towards center of card)
+                    const pullForce = (1.0 - dist / pullRadius) * 0.06;
+                    state.vx += (dx / dist) * pullForce;
+                    state.vy += (dy / dist) * pullForce;
+                    state.vz += (dz / dist) * pullForce;
+
+                    // 2. Orbital Swirl Force (Lorentz-like vortex force around attractor)
+                    // Perpendicular orbital vector: (-dy, dx)
+                    const swirlStrength = (1.0 - dist / pullRadius) * 0.08;
+                    state.vx += (-dy / dist) * swirlStrength;
+                    state.vy += (dx / dist) * swirlStrength;
+                    state.vz += (Math.sin(time + i) * 0.01); // minor spiral depth oscillation
+                } else {
+                    // Outside attraction range: slowly return to initial resting position
+                    const restDx = state.restX - px;
+                    const restDy = state.restY - py;
+                    const restDz = state.restZ - pz;
+                    
+                    state.vx += restDx * 0.02;
+                    state.vy += restDy * 0.02;
+                    state.vz += restDz * 0.02;
+                }
+            } else {
+                // No hover target active: return fully to baseline resting position
+                const restDx = state.restX - px;
+                const restDy = state.restY - py;
+                const restDz = state.restZ - pz;
+                
+                state.vx += restDx * 0.04;
+                state.vy += restDy * 0.04;
+                state.vz += restDz * 0.04;
+            }
+
+            // Apply friction/drag to prevent particles from escaping orbit
+            state.vx *= 0.88;
+            state.vy *= 0.88;
+            state.vz *= 0.88;
+
+            // Update particle coordinate (rest waves + velocity)
+            px += state.vx + waveX;
+            py += state.vy + waveY;
+            pz += state.vz;
+
+            positionsAttr.setXYZ(i, px, py, pz);
+        }
+
+        // Notify Three.js to re-upload vertices to GPU
+        positionsAttr.needsUpdate = true;
 
         renderer.render(scene, camera);
     }
