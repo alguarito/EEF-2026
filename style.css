@@ -334,7 +334,18 @@ header.scrolled {
     pointer-events: none;
 }
 
+.canvas-bg-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    pointer-events: none;
+}
+
 .canvas-bg-container canvas,
+.canvas-bg-fixed canvas,
 #recursos-canvas-container canvas {
     display: block;
     width: 100%;
