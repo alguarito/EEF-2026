@@ -347,14 +347,138 @@ header.scrolled {
     color: var(--color-secondary);
 }
 
-.grid {
+.modules .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Compact layout mode for standard laptops (992px to 1200px) to preserve a flawless 5x2 grid */
+@media (max-width: 1200px) {
+    .modules .grid {
+        gap: 1rem;
+    }
+    
+    .modules .card {
+        padding: 1.25rem 1rem;
+    }
+    
+    .modules .card-icon-container {
+        width: 44px;
+        height: 44px;
+        font-size: 1.2rem;
+        margin-bottom: 0.8rem;
+        border-radius: 10px;
+    }
+    
+    .modules .session-badge {
+        font-size: 0.62rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .modules .session-card h3 {
+        font-size: 1.05rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .modules .session-card p {
+        font-size: 0.82rem;
+        margin-bottom: 1rem;
+        line-height: 1.4;
+    }
+    
+    .modules .session-category {
+        padding: 2px 8px;
+        font-size: 0.6rem;
+    }
+}
+
+/* Symmetric 2-column layout for tablets (600px to 991px), making it a perfect 2x5 grid */
+@media (max-width: 991px) {
+    .modules .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+    
+    /* Restore larger padding and sizing on tablets since we have ample width in 2 columns */
+    .modules .card {
+        padding: 1.8rem 1.4rem;
+    }
+    
+    .modules .card-icon-container {
+        width: 54px;
+        height: 54px;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        border-radius: 12px;
+    }
+    
+    .modules .session-badge {
+        font-size: 0.7rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .modules .session-card h3 {
+        font-size: 1.22rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .modules .session-card p {
+        font-size: 0.88rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+    }
+    
+    .modules .session-category {
+        padding: 3px 10px;
+        font-size: 0.65rem;
+    }
+}
+
+/* Clean 1-column vertical stack for mobile devices (<600px), a perfect 1x10 grid */
+@media (max-width: 600px) {
+    .modules .grid {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+    }
+    
+    .modules .card {
+        padding: 1.5rem 1.2rem;
+    }
+    
+    .modules .card-icon-container {
+        width: 48px;
+        height: 48px;
+        font-size: 1.35rem;
+        margin-bottom: 1.2rem;
+        border-radius: 10px;
+    }
+    
+    .modules .session-badge {
+        font-size: 0.68rem;
+        margin-bottom: 0.6rem;
+    }
+    
+    .modules .session-card h3 {
+        font-size: 1.15rem;
+        margin-bottom: 0.6rem;
+    }
+    
+    .modules .session-card p {
+        font-size: 0.85rem;
+        margin-bottom: 1.2rem;
+        line-height: 1.45;
+    }
+    
+    .modules .session-category {
+        padding: 2px 8px;
+        font-size: 0.62rem;
+    }
 }
 
 .card {
-    padding: 2.2rem;
+    padding: 1.8rem 1.4rem;
     border-radius: var(--radius-lg);
     background: rgba(255, 255, 255, 0.72);
     backdrop-filter: blur(20px) saturate(180%);
