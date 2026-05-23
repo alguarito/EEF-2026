@@ -1,18 +1,19 @@
 // ==========================================================================
 // 3D QUANTUM PARTICLE NEBULA SIMULATOR (Three.js WebGL)
 // Especialización en la Enseñanza de la Física - UTP
+// Biblioteca de Recursos Digitales Section
 // ==========================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    const container = document.getElementById('curricular-canvas-container');
-    const modulesSection = document.getElementById('curricular');
-    const sessionCards = document.querySelectorAll('.session-card');
-    if (!container || !modulesSection || sessionCards.length === 0) return;
+    const container = document.getElementById('recursos-canvas-container');
+    const recursosSection = document.getElementById('recursos');
+    const resourceCards = document.querySelectorAll('.resource-card');
+    if (!container || !recursosSection || resourceCards.length === 0) return;
 
     // --- Scene, Camera, Renderer Setup ---
     const scene = new THREE.Scene();
     
-    // Perspective Camera focusing on the curriculum board plane
+    // Perspective Camera focusing on the resources board plane
     const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
     camera.position.set(0, 0, 15);
 
@@ -113,8 +114,8 @@ document.addEventListener('DOMContentLoaded', () => {
         attractorTarget3D.z = -1.5;
     }
 
-    // Attach hover listeners to all session cards
-    sessionCards.forEach((card, idx) => {
+    // Attach hover listeners to all resource cards
+    resourceCards.forEach((card, idx) => {
         card.addEventListener('mouseenter', () => {
             isAttracting = true;
             activeCardIndex = idx;
@@ -134,28 +135,28 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Reset attractor on section leave
-    modulesSection.addEventListener('mouseleave', () => {
+    recursosSection.addEventListener('mouseleave', () => {
         isAttracting = false;
         activeCardIndex = -1;
         attractorTarget3D.set(0, 0, -999); // push attractor away
     });
 
     // --- Performance Optimization: Viewport Frustum Visibility Check ---
-    let isCurricularInViewport = true;
+    let isRecursosInViewport = true;
     let isHeroInViewport = true;
 
     const observerOptions = { root: null, threshold: 0.05 };
     const sectionObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.target.id === 'curricular') {
-                isCurricularInViewport = entry.isIntersecting;
+            if (entry.target.id === 'recursos') {
+                isRecursosInViewport = entry.isIntersecting;
             } else if (entry.target.id === 'hero-section') {
                 isHeroInViewport = entry.isIntersecting;
             }
         });
     }, observerOptions);
 
-    sectionObserver.observe(modulesSection);
+    sectionObserver.observe(recursosSection);
     const heroSec = document.getElementById('hero-section');
     if (heroSec) sectionObserver.observe(heroSec);
 
@@ -166,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(animate);
 
         // performance check: stop loops if not visible in screen view
-        if (!isCurricularInViewport) return;
+        if (!isRecursosInViewport) return;
 
         const time = clock.getElapsedTime();
         const positionsAttr = geometry.attributes.position;
@@ -266,8 +267,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Re-check card layouts on window resize to map coordinates perfectly
     window.addEventListener('resize', () => {
-        if (activeCardIndex !== -1 && sessionCards[activeCardIndex]) {
-            mapCardTo3D(sessionCards[activeCardIndex]);
+        if (activeCardIndex !== -1 && resourceCards[activeCardIndex]) {
+            mapCardTo3D(resourceCards[activeCardIndex]);
         }
     });
 });

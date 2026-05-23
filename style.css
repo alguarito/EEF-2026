@@ -323,7 +323,7 @@ header.scrolled {
     background: transparent;
 }
 
-#curricular-canvas-container {
+#recursos-canvas-container {
     position: absolute;
     top: 0;
     left: 0;
@@ -333,7 +333,7 @@ header.scrolled {
     pointer-events: none;
 }
 
-#curricular-canvas-container canvas {
+#recursos-canvas-container canvas {
     display: block;
     width: 100%;
     height: 100%;
@@ -1053,7 +1053,9 @@ footer::before {
    ========================================================================== */
 
 .recursos {
+    position: relative;
     padding: 6rem 0;
+    overflow: hidden;
     background: transparent; /* Permite ver el fondo radial de la página */
 }
 
