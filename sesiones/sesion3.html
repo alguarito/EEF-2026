@@ -6,6 +6,217 @@
     <title>Sesión 3: Síntesis Documental (NotebookLM) | EEF UTP</title>
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Estilos específicos de la consola interactiva de NotebookLM */
+        .studio-console {
+            background: #0f172a; /* Azul pizarra oscuro */
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(51, 181, 229, 0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            color: #f1f5f9;
+            overflow: hidden;
+            margin: 3rem 0;
+            text-align: left;
+        }
+        
+        .console-header {
+            background: #1e293b;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .dots-wrapper {
+            display: flex;
+            gap: 6px;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .dot-red { background: #ef4444; }
+        .dot-yellow { background: #eab308; }
+        .dot-green { background: #22c55e; }
+        
+        .console-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #94a3b8;
+            letter-spacing: 0.5px;
+        }
+        
+        .console-body {
+            display: grid;
+            grid-template-columns: 1fr 1.8fr 1.2fr;
+            min-height: 420px;
+        }
+        
+        @media (max-width: 992px) {
+            .console-body {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .pane {
+            padding: 1.5rem;
+            border-right: 1px solid rgba(255,255,255,0.05);
+        }
+        .pane:last-child {
+            border-right: none;
+        }
+        
+        .pane-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 1.2rem;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Panel Fuentes */
+        .source-item {
+            background: #1e293b;
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 0.8rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.8rem;
+        }
+        
+        .source-icon {
+            color: #33B5E5;
+            font-size: 1.2rem;
+        }
+        
+        /* Panel Chat */
+        .chat-bubble {
+            background: #1e293b;
+            border-radius: 8px;
+            padding: 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            border-left: 3px solid var(--color-primary);
+            line-height: 1.4;
+        }
+        
+        .chat-bubble.ai {
+            background: rgba(51, 181, 229, 0.05);
+            border-left-color: #22c55e;
+        }
+        
+        /* Panel Studio */
+        .audio-player-mockup {
+            background: rgba(255,255,255,0.02);
+            border: 1px dashed rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .waveform {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            height: 40px;
+            margin: 1.5rem 0;
+        }
+        
+        .bar {
+            width: 3px;
+            background: var(--color-primary);
+            border-radius: 3px;
+            animation: bounce 1.2s infinite ease-in-out;
+        }
+        
+        .bar:nth-child(1) { height: 10px; animation-delay: 0.1s; }
+        .bar:nth-child(2) { height: 28px; animation-delay: 0.3s; }
+        .bar:nth-child(3) { height: 15px; animation-delay: 0.2s; }
+        .bar:nth-child(4) { height: 35px; animation-delay: 0.5s; }
+        .bar:nth-child(5) { height: 20px; animation-delay: 0.1s; }
+        .bar:nth-child(6) { height: 38px; animation-delay: 0.4s; }
+        .bar:nth-child(7) { height: 12px; animation-delay: 0.2s; }
+        .bar:nth-child(8) { height: 25px; animation-delay: 0.6s; }
+        
+        @keyframes bounce {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(1.7); }
+        }
+        
+        /* Portada previsualización */
+        .presentation-preview {
+            width: 100%;
+            height: 200px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(0,0,0,0.1);
+            position: relative;
+            box-shadow: var(--shadow-sm);
+        }
+        .presentation-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-smooth);
+        }
+        .presentation-preview:hover img {
+            transform: scale(1.03);
+        }
+        
+        .preview-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.8));
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.2rem;
+            color: white;
+            opacity: 0.9;
+        }
+
+        .preview-overlay span {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--color-primary);
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .preview-overlay h4 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 0;
+            color: white;
+        }
+        
+        .synthesis-box {
+            background: rgba(51, 181, 229, 0.03);
+            border-left: 4px solid var(--color-primary);
+            padding: 1.2rem;
+            margin-top: 1.2rem;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--color-dark);
+        }
+    </style>
 </head>
 <body>
 
@@ -75,7 +286,7 @@
         <section class="container">
             <h2 class="section-title" style="margin-bottom: 3rem;">Ruta de Transformación Curricular</h2>
             <p style="text-align: center; max-width: 800px; margin: -2rem auto 4rem; opacity: 0.8;">
-                Explora el marco conceptual completo en 4 fases, accediendo directamente a las diapositivas de cada unidad del ecosistema pedagógico.
+                Explora el marco conceptual completo en 4 fases. Haz clic en las previsualizaciones de las portadas de las diapositivas para abrir las presentaciones interactivas completas.
             </p>
 
             <div class="learning-path">
@@ -84,14 +295,22 @@
                 <div class="learning-step">
                     <span class="step-label" style="background: rgba(0, 61, 109, 0.1); color: var(--color-secondary);">Fase 1: Mapear</span>
                     <h2>IA-Navigator: Identificación de Ejes</h2>
-                    <p>El punto de partida técnico. Usamos modelos avanzados de lenguaje (Gemini) para mapear los estándares curriculares nacionales (MEN Colombia) e identificar los temas troncales de la física que ameritan ser reformulados en el grado 11.</p>
+                    <p>El punto de partida técnico. Usamos modelos avanzados de lenguaje (Gemini) para mapear los estándares curriculares nacionales (MEN Colombia) e identificar los temas troncales de la física que se reformularán en grado 11.</p>
                     
                     <div class="action-grid" style="margin-top: 2rem;">
-                        <div class="card glass presentation-card" style="border-left: 4px solid var(--color-primary);">
-                            <i class="fas fa-compass fa-3x" style="color: var(--color-primary); margin-bottom: 1rem;"></i>
-                            <h3>Unidad 1: IA-Navigator</h3>
-                            <p style="margin-bottom: 1.5rem;">Marcos de referencia, estándares nacionales e identificación inteligente de competencias.</p>
-                            <a href="https://1drv.ms/p/c/959507f5d5084553/IQCe6SoKfKqcSJ3jAkPB-f4sAdEiRZVwLYWkhtUYu-jAiNM?e=99PuRs" target="_blank" class="btn-primary">Ver Presentación <i class="fas fa-external-link-alt"></i></a>
+                        <div class="card glass presentation-card" style="border-left: 4px solid var(--color-primary); padding: 1.5rem;">
+                            <!-- Portada Previa Diapositiva 1 -->
+                            <div class="presentation-preview">
+                                <img src="../IMAGENES/ia_navigator_cover.png" alt="Portada de la Presentación 1 - IA-Navigator">
+                                <div class="preview-overlay">
+                                    <span>Presentación Unidad 1</span>
+                                    <h4>Fase 1: IA-Navigator</h4>
+                                </div>
+                            </div>
+                            <div class="synthesis-box">
+                                <strong>Síntesis Curricular:</strong> Establece los marcos analíticos iniciales. Permite a los docentes identificar el núcleo de competencia requerido en el país y estructurarlo mediante IA en cuatro grandes sistemas dinámicos (Ondas, Termodinámica, Electromagnetismo y Física Cuántica) con un enfoque pedagógico contemporáneo.
+                            </div>
+                            <a href="https://1drv.ms/p/c/959507f5d5084553/IQCe6SoKfKqcSJ3jAkPB-f4sAdEiRZVwLYWkhtUYu-jAiNM?e=99PuRs" target="_blank" class="btn-primary" style="margin-top: 1.5rem; width: 100%;">Abrir Presentación Completa <i class="fas fa-external-link-alt"></i></a>
                         </div>
                     </div>
                 </div>
@@ -100,14 +319,22 @@
                 <div class="learning-step">
                     <span class="step-label">Fase 2: Buscar</span>
                     <h2>Global-Search: Excelencia en la Enseñanza</h2>
-                    <p>Elevamos el nivel hacia estándares mundiales. Buscamos y contrastamos metodologías activas (Inquiry-Based Learning - IBL) y recursos simulados en laboratorios interactivos (PhET Colorado, MIT, Stanford) para nutrir la unidad didáctica.</p>
+                    <p>Elevamos el nivel hacia estándares mundiales. Buscamos y contrastamos metodologías activas (Inquiry-Based Learning - IBL) y recursos simulados en laboratorios interactivos internacionales para nutrir el aula de física.</p>
                     
                     <div class="action-grid" style="margin-top: 2rem;">
-                        <div class="card glass presentation-card" style="border-left: 4px solid var(--color-secondary);">
-                            <i class="fas fa-globe fa-3x" style="color: var(--color-secondary); margin-bottom: 1rem;"></i>
-                            <h3>Unidad 2: Global-Search</h3>
-                            <p style="margin-bottom: 1.5rem;">Simulaciones virtuales, aprendizaje basado en indagación y referentes internacionales.</p>
-                            <a href="https://1drv.ms/p/c/959507f5d5084553/IQDG6nfYTvp6R5Jggxelzww2AaJkUp-f0SZW6R8ZtkNl4qE?e=A8i8nX" target="_blank" class="btn-primary">Ver Presentación <i class="fas fa-external-link-alt"></i></a>
+                        <div class="card glass presentation-card" style="border-left: 4px solid var(--color-secondary); padding: 1.5rem;">
+                            <!-- Portada Previa Diapositiva 2 -->
+                            <div class="presentation-preview">
+                                <img src="../IMAGENES/global_search_cover.png" alt="Portada de la Presentación 2 - Global Search">
+                                <div class="preview-overlay">
+                                    <span>Presentación Unidad 2</span>
+                                    <h4>Fase 2: Global-Search</h4>
+                                </div>
+                            </div>
+                            <div class="synthesis-box">
+                                <strong>Síntesis Curricular:</strong> Vincula el aula con las mejores universidades e institutos del mundo. Promueve el uso prioritario de los laboratorios interactivos de **PhET** (Universidad de Colorado) bajo la metodología de Aprendizaje Basado en Indagación (IBL) y desafíos STEM reales.
+                            </div>
+                            <a href="https://1drv.ms/p/c/959507f5d5084553/IQDG6nfYTvp6R5Jggxelzww2AaJkUp-f0SZW6R8ZtkNl4qE?e=A8i8nX" target="_blank" class="btn-primary" style="margin-top: 1.5rem; width: 100%;">Abrir Presentación Completa <i class="fas fa-external-link-alt"></i></a>
                         </div>
                     </div>
                 </div>
@@ -116,14 +343,22 @@
                 <div class="learning-step">
                     <span class="step-label" style="background: rgba(251, 192, 45, 0.1); color: #FBC02D;">Fase 3: Infundir</span>
                     <h2>Ethical-Layer: Infusión Axiológica</h2>
-                    <p>Damos alma a los contenidos. Conectamos los fenómenos de la física con el mundo real a través de una capa moral y filosófica (ej. analizar circuitos desde la justicia energética, o la entropía desde el impacto de la crisis climática).</p>
+                    <p>Damos alma a los contenidos. Conectamos los fenómenos de la física con la realidad moral y social de los estudiantes mediante debates reflexivos y dilemas axiológicos estructurados.</p>
                     
                     <div class="action-grid" style="margin-top: 2rem;">
-                        <div class="card glass presentation-card" style="border-left: 4px solid #FBC02D;">
-                            <i class="fas fa-balance-scale fa-3x" style="color: #FBC02D; margin-bottom: 1rem;"></i>
-                            <h3>Unidad 3: Ethical-Layer</h3>
-                            <p style="margin-bottom: 1.5rem;">Capa ético-filosófica, justicia socio-ambiental e impacto social de la ciencia.</p>
-                            <a href="https://1drv.ms/p/c/959507f5d5084553/IQAmpKm9LWHRTaSFnjfO3XZqAQfj1e4KH1UyoinIZLy0AHc?e=6l7SG7" target="_blank" class="btn-primary">Ver Presentación <i class="fas fa-external-link-alt"></i></a>
+                        <div class="card glass presentation-card" style="border-left: 4px solid #FBC02D; padding: 1.5rem;">
+                            <!-- Portada Previa Diapositiva 3 -->
+                            <div class="presentation-preview">
+                                <img src="../IMAGENES/ethical_layer_cover.png" alt="Portada de la Presentación 3 - Ethical Layer">
+                                <div class="preview-overlay">
+                                    <span>Presentación Unidad 3</span>
+                                    <h4>Fase 3: Ethical-Layer</h4>
+                                </div>
+                            </div>
+                            <div class="synthesis-box">
+                                <strong>Síntesis Curricular:</strong> Otorga una dimensión humana y social a la ciencia. Plantea el estudio de fenómenos físicos a través del prisma de la **Justicia Energética**, el impacto del cambio climático, la ética de la vigilancia electromagnética y la bioética nuclear.
+                            </div>
+                            <a href="https://1drv.ms/p/c/959507f5d5084553/IQAmpKm9LWHRTaSFnjfO3XZqAQfj1e4KH1UyoinIZLy0AHc?e=6l7SG7" target="_blank" class="btn-primary" style="margin-top: 1.5rem; width: 100%;">Abrir Presentación Completa <i class="fas fa-external-link-alt"></i></a>
                         </div>
                     </div>
                 </div>
@@ -132,14 +367,22 @@
                 <div class="learning-step">
                     <span class="step-label" style="background: rgba(142, 36, 170, 0.1); color: #8E24AA;">Fase 4: Construir</span>
                     <h2>Agent-Builder: El Docente-Arquitecto</h2>
-                    <p>El punto de consolidación. Diseñamos un prompt maestro para que Gemini actúe como un co-piloto pedagógico senior y asista de forma interactiva en la redacción detallada de laboratorios y actividades didácticas.</p>
+                    <p>El punto de consolidación. Diseñamos un prompt maestro para que Gemini actúe como un co-piloto pedagógico senior y asista de forma interactiva en la redacción de guías de laboratorio.</p>
                     
                     <div class="action-grid" style="margin-top: 2rem;">
-                        <div class="card glass presentation-card" style="border-left: 4px solid #8E24AA;">
-                            <i class="fas fa-robot fa-3x" style="color: #8E24AA; margin-bottom: 1rem;"></i>
-                            <h3>Unidad 4: Agent-Builder</h3>
-                            <p style="margin-bottom: 1.5rem;">Diseño instruccional asistido por IA, arquitectura de prompts y personalización pedagógica.</p>
-                            <a href="https://1drv.ms/p/c/959507f5d5084553/IQCgY_EBt4RAT4ECALV5sYGvAa0TxqFgKYvZZw1Uovx3sew?e=mdRczJ" target="_blank" class="btn-primary">Ver Presentación <i class="fas fa-external-link-alt"></i></a>
+                        <div class="card glass presentation-card" style="border-left: 4px solid #8E24AA; padding: 1.5rem;">
+                            <!-- Portada Previa Diapositiva 4 -->
+                            <div class="presentation-preview">
+                                <img src="../IMAGENES/agent_builder_cover.png" alt="Portada de la Presentación 4 - Agent Builder">
+                                <div class="preview-overlay">
+                                    <span>Presentación Unidad 4</span>
+                                    <h4>Fase 4: Agent-Builder</h4>
+                                </div>
+                            </div>
+                            <div class="synthesis-box">
+                                <strong>Síntesis Curricular:</strong> Transforma al docente en un verdadero programador curricular. Enseña a estructurar prompts de sistema en el "Gemini Agent Builder" para generar de forma ágil y consistente guías didácticas que unifiquen los objetivos técnicos del MEN con la capa axiológica de la materia.
+                            </div>
+                            <a href="https://1drv.ms/p/c/959507f5d5084553/IQCgY_EBt4RAT4ECALV5sYGvAa0TxqFgKYvZZw1Uovx3sew?e=mdRczJ" target="_blank" class="btn-primary" style="margin-top: 1.5rem; width: 100%;">Abrir Presentación Completa <i class="fas fa-external-link-alt"></i></a>
                         </div>
                     </div>
                 </div>
@@ -151,41 +394,129 @@
         <section class="container" style="margin-top: 4rem;">
             <div class="glass" style="padding: 3rem; border-radius: var(--radius-md); border-top: 5px solid var(--color-primary);">
                 <h2 style="text-align: center; margin-bottom: 1rem;"><i class="fas fa-terminal"></i> Taller del Docente-Arquitecto en NotebookLM</h2>
-                <p style="text-align: center; max-width: 700px; margin: 0 auto 3rem; opacity: 0.85;">
+                <p style="text-align: center; max-width: 700px; margin: 0 auto 2rem; opacity: 0.85;">
                     Utiliza la guía de planeación pedagógica en NotebookLM y ejecuta los siguientes prompts maestros en el chat para refinar tus recursos interactivos.
                 </p>
 
-                <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <!-- EXPLICACIÓN GRÁFICA Y DETALLADA DEL APARTADO (STUDIO CONSOLE) -->
+                <div class="studio-console">
+                    <div class="console-header">
+                        <div class="dots-wrapper">
+                            <div class="dot dot-red"></div>
+                            <div class="dot dot-yellow"></div>
+                            <div class="dot dot-green"></div>
+                        </div>
+                        <div class="console-title"><i class="fas fa-project-diagram"></i> CONSOLA DE DISEÑO INSTRUCCIONAL: WORKFLOW NOTEBOOKLM</div>
+                        <div style="width: 40px;"></div>
+                    </div>
+                    <div class="console-body">
+                        <!-- Panel Fuentes (Paso 1) -->
+                        <div class="pane">
+                            <div class="pane-title">
+                                <i class="fas fa-file-upload"></i> PASO 1: FUENTES (.MD)
+                            </div>
+                            <p style="font-size: 0.8rem; margin-bottom: 1rem; color: #94a3b8;">
+                                Sube la Planeación Curricular Maestra para establecer el contexto pedagógico.
+                            </p>
+                            <div class="source-item">
+                                <i class="fas fa-file-alt source-icon"></i>
+                                <div>
+                                    <div style="font-weight: 600; color: #e2e8f0;">PLANEACION_FISICA.md</div>
+                                    <div style="font-size: 0.7rem; color: #64748b;">2.8 KB • Cargado</div>
+                                </div>
+                            </div>
+                            <div class="source-item" style="opacity: 0.5;">
+                                <i class="fas fa-plus-circle source-icon" style="color: #64748b;"></i>
+                                <span style="color: #64748b; font-size: 0.75rem;">Añadir otra fuente</span>
+                            </div>
+                        </div>
+
+                        <!-- Panel Chat (Paso 2) -->
+                        <div class="pane" style="background: rgba(255, 255, 255, 0.01);">
+                            <div class="pane-title">
+                                <i class="fas fa-comments"></i> PASO 2: CHAT & PROMPTS
+                            </div>
+                            <div class="chat-bubble">
+                                <span style="font-weight: 700; color: var(--color-primary); font-size: 0.7rem; text-transform: uppercase;">Docente (Prompt 2):</span>
+                                <p style="font-size: 0.75rem; color: #cbd5e1; margin-top: 2px;">
+                                    "Basado en la Fase 4 de este documento, ayúdame a redactar un prompt avanzado para Gemini..."
+                                </p>
+                            </div>
+                            <div class="chat-bubble ai">
+                                <span style="font-weight: 700; color: #22c55e; font-size: 0.7rem; text-transform: uppercase;">NotebookLM Consultor:</span>
+                                <p style="font-size: 0.75rem; color: #cbd5e1; margin-top: 2px;">
+                                    "Aquí tienes la estructura de sistema para tu tutor: <em>'Actúa como un Diseñador Instruccional Senior. Vincula la Fase 3 ética con el MEN...'</em>"
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Panel Studio (Paso 3) -->
+                        <div class="pane">
+                            <div class="pane-title">
+                                <i class="fas fa-sliders-h"></i> PASO 3: STUDIO (MULTIMEDIA)
+                            </div>
+                            <p style="font-size: 0.8rem; margin-bottom: 1rem; color: #94a3b8;">
+                                Genera audio resúmenes ultra realistas discutiendo el marco.
+                            </p>
+                            <div class="audio-player-mockup">
+                                <span style="font-size: 0.7rem; font-weight: 700; color: #94a3b8; display: block; text-transform: uppercase;">Audio Overview</span>
+                                <div class="waveform">
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                </div>
+                                <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                    <i class="fas fa-play" style="color: var(--color-primary); font-size: 0.8rem;"></i>
+                                    <span style="font-size: 0.75rem; color: #e2e8f0; font-family: monospace;">08:12 / 12:43 min</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grilla de Prompts Maestros -->
+                <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;">
                     <!-- Prompt 1 -->
-                    <div class="insight-card" style="display: flex; flex-direction: column;">
-                        <i class="fas fa-volume-up fa-2x"></i>
-                        <h4>1. El Consultor de Metodología</h4>
-                        <p style="font-size: 0.9rem; margin-top: 0.5rem; flex-grow: 1;">
-                            <strong>Audio Overview Prompt:</strong> "Generen un Audio Overview donde dos consultores de diseño instruccional discutan las 4 fases de transformación de esta guía. Deben enfatizar por qué la 'Búsqueda de Excelencia' (Fase 2) y la 'Infusión Axiológica' (Fase 3) son las que realmente elevan el nivel del docente."
+                    <div class="insight-card" style="display: flex; flex-direction: column; border-style: solid; border-width: 1px;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 0.8rem;">
+                            <i class="fas fa-volume-up fa-lg" style="color: var(--color-primary);"></i>
+                            <h4 style="margin: 0;">1. El Consultor de Metodología</h4>
+                        </div>
+                        <p style="font-size: 0.85rem; margin: 0; flex-grow: 1; line-height: 1.5; color: var(--color-dark);">
+                            <strong>Audio Overview:</strong> "Generen un Audio Overview donde dos consultores de diseño instruccional discutan las 4 fases de transformación de esta guía. Deben enfatizar por qué la 'Búsqueda de Excelencia' (Fase 2) y la 'Infusión Axiológica' (Fase 3) son las que realmente elevan el nivel del docente."
                         </p>
                     </div>
 
                     <!-- Prompt 2 -->
-                    <div class="insight-card" style="display: flex; flex-direction: column;">
-                        <i class="fas fa-comment-dots fa-2x"></i>
-                        <h4>2. El Mentor de Agentes</h4>
-                        <p style="font-size: 0.9rem; margin-top: 0.5rem; flex-grow: 1;">
+                    <div class="insight-card" style="display: flex; flex-direction: column; border-style: solid; border-width: 1px;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 0.8rem;">
+                            <i class="fas fa-comment-dots fa-lg" style="color: var(--color-primary);"></i>
+                            <h4 style="margin: 0;">2. El Mentor de Agentes</h4>
+                        </div>
+                        <p style="font-size: 0.85rem; margin: 0; flex-grow: 1; line-height: 1.5; color: var(--color-dark);">
                             <strong>Chat Prompt:</strong> "Basado en la Fase 4 de este documento, ayúdame a redactar un prompt avanzado para Gemini que actúe como mi tutor personal para diseñar laboratorios de física cuántica con enfoque ético."
                         </p>
                     </div>
 
                     <!-- Prompt 3 -->
-                    <div class="insight-card" style="display: flex; flex-direction: column;">
-                        <i class="fas fa-video fa-2x"></i>
-                        <h4>3. Generador Multimedia</h4>
-                        <p style="font-size: 0.9rem; margin-top: 0.5rem; flex-grow: 1;">
-                            <strong>Video Overview Prompt:</strong> "Crea un video que presente la Fase 3 (Infusión Axiológica). Usa un tono filosófico e inspirador. Que hable sobre cómo la física nos enseña responsabilidad ante el universo."
+                    <div class="insight-card" style="display: flex; flex-direction: column; border-style: solid; border-width: 1px;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 0.8rem;">
+                            <i class="fas fa-video fa-lg" style="color: var(--color-primary);"></i>
+                            <h4 style="margin: 0;">3. Generador Multimedia</h4>
+                        </div>
+                        <p style="font-size: 0.85rem; margin: 0; flex-grow: 1; line-height: 1.5; color: var(--color-dark);">
+                            <strong>Video Overview:</strong> "Crea un video que presente la Fase 3 (Infusión Axiológica). Usa un tono filosófico e inspirador. Que hable sobre cómo la física nos enseña responsabilidad ante el universo."
                         </p>
                     </div>
                 </div>
 
                 <div class="attention-capsule" style="background: rgba(51, 181, 229, 0.05); border-color: var(--color-primary); text-align: center; margin-top: 3rem;">
-                    <i class="fas fa-brain"></i> Para comenzar, sube el archivo <strong>PLANEACION_FISICA_11_MAESTRO.md</strong> a un nuevo Notebook e ingresa al <strong>Studio</strong> para refinar la interacción.
+                    <i class="fas fa-info-circle"></i> Sube el archivo <strong>PLANEACION_FISICA_11_MAESTRO.md</strong> a NotebookLM e ingresa al <strong>Studio</strong> en la barra lateral derecha para refinar tu material educativo de física.
                     <div style="margin-top: 1.5rem;">
                         <a href="https://notebooklm.google.com/" target="_blank" class="btn-primary"><i class="fas fa-external-link-alt"></i> Ir a NotebookLM Studio</a>
                     </div>
