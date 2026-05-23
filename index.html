@@ -7,6 +7,8 @@
     <meta name="description" content="Plataforma educativa de la Especialización en la Enseñanza de la Física - UTP. Contenidos de TIC e IA en la educación.">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Three.js CDN Library for WebGL 3D Physics Space-Time Gravity Warp -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
 
@@ -62,11 +64,14 @@
 
     <main>
         <!-- Hero Section -->
-        <section class="hero">
-            <div class="container">
+        <section class="hero" id="hero-section">
+            <!-- 3D Space-Time Gravity Warp WebGL Canvas Container -->
+            <div id="spacetime-canvas-container"></div>
+            
+            <div class="container" style="position: relative; z-index: 2; pointer-events: none;">
                 <div class="hero-grid">
                     <!-- Column 1: Text Content -->
-                    <div class="hero-content">
+                    <div class="hero-content" style="pointer-events: auto;">
                         <span class="hero-badge"><i class="fas fa-university"></i> Especialización en la Enseñanza de la Física • UTP</span>
                         <h1>Tipologías de las TIC para la <span class="highlight">Enseñanza de la Física</span></h1>
                         <p>Hacia un ecosistema educativo inteligente potenciado por la Inteligencia Artificial de Google.</p>
@@ -77,7 +82,7 @@
                     </div>
                     
                     <!-- Column 2: Interactive Quantum Lab Console (WOW Factor!) -->
-                    <div class="quantum-lab-card">
+                    <div class="quantum-lab-card" style="pointer-events: auto;">
                         <!-- Lab Header / Telemetry Display -->
                         <div class="lab-telemetry">
                             <span class="telemetry-badge"><i class="fas fa-microscope"></i> Lab Virtual EEF</span>
@@ -364,6 +369,8 @@
         </div>
     </footer>
 
+    <!-- 3D Physics WebGL spacetime gravity warp script -->
+    <script src="physics-3d.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

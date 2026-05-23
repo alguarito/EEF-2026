@@ -1699,3 +1699,30 @@ footer::before {
     box-shadow: 0 2px 8px rgba(0, 61, 109, 0.04);
 }
 
+/* ==========================================================================
+   3D SPACETIME WEBGL CANVAS BACKGROUND STYLES
+   ========================================================================== */
+#spacetime-canvas-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: auto;
+    overflow: hidden;
+}
+
+#spacetime-canvas-container canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+}
+
+.hero {
+    position: relative;
+    overflow: hidden;
+    background: transparent; /* Permite ver los orbes de aurora a través del canvas */
+}
+
