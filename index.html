@@ -10,6 +10,13 @@
 </head>
 <body>
 
+    <!-- Aurora background mesh glows -->
+    <div class="aurora-container">
+        <div class="aurora-orb orb-1"></div>
+        <div class="aurora-orb orb-2"></div>
+        <div class="aurora-orb orb-3"></div>
+    </div>
+
     <header class="glass">
         <div class="container">
             <nav class="nav-wrapper">
@@ -57,12 +64,32 @@
         <!-- Hero Section -->
         <section class="hero">
             <div class="container">
-                <div class="hero-content">
-                    <h1>Tipologías de las TIC para la <span class="highlight">Enseñanza de la Física</span></h1>
-                    <p>Hacia un ecosistema educativo inteligente potenciado por la Inteligencia Artificial de Google.</p>
-                    <div class="hero-btns">
-                        <a href="sesiones/sesion1.html" class="btn-primary">Explorar Sesiones</a>
-                        <a href="#recursos" class="btn-secondary">Recursos TIC</a>
+                <div class="hero-grid">
+                    <!-- Column 1: Text Content -->
+                    <div class="hero-content">
+                        <span class="hero-badge"><i class="fas fa-university"></i> Especialización en la Enseñanza de la Física • UTP</span>
+                        <h1>Tipologías de las TIC para la <span class="highlight">Enseñanza de la Física</span></h1>
+                        <p>Hacia un ecosistema educativo inteligente potenciado por la Inteligencia Artificial de Google.</p>
+                        <div class="hero-btns">
+                            <a href="sesiones/sesion1.html" class="btn-primary">Explorar Sesiones <i class="fas fa-arrow-right" style="margin-left: 8px;"></i></a>
+                            <a href="#recursos" class="btn-secondary">Recursos TIC</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Column 2: 3D Bohr Atom CSS Simulator (WOW Factor!) -->
+                    <div class="hero-simulator-container">
+                        <div class="bohr-atom">
+                            <div class="nucleus"></div>
+                            <div class="orbit orbit-1">
+                                <div class="electron"></div>
+                            </div>
+                            <div class="orbit orbit-2">
+                                <div class="electron"></div>
+                            </div>
+                            <div class="orbit orbit-3">
+                                <div class="electron"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -74,21 +101,33 @@
                 <h2 class="section-title">Nuestra Propuesta Curricular</h2>
                 <div class="grid">
                     <div class="card glass">
+                        <div class="card-icon-container">
+                            <i class="fas fa-brain"></i>
+                        </div>
                         <div class="module-number">Módulo 1</div>
                         <h3>Introducción e IA</h3>
                         <p>Fundamentos de la IA en educación física y creación de ecosistemas inteligentes con Gemini.</p>
                     </div>
                     <div class="card glass">
+                        <div class="card-icon-container">
+                            <i class="fas fa-glasses"></i>
+                        </div>
                         <div class="module-number">Módulo 2</div>
                         <h3>Diseño y Curaduría</h3>
                         <p>Uso de NotebookLM para síntesis documental y generación de recursos gráficos con Imagen 3.</p>
                     </div>
                     <div class="card glass">
+                        <div class="card-icon-container">
+                            <i class="fas fa-photo-video"></i>
+                        </div>
                         <div class="module-number">Módulo 3</div>
                         <h3>Multimedia Asistida</h3>
                         <p>Producción de video con Google Vids y exploración móvil con Gemini Live.</p>
                     </div>
                     <div class="card glass">
+                        <div class="card-icon-container">
+                            <i class="fas fa-microscope"></i>
+                        </div>
                         <div class="module-number">Módulo 4</div>
                         <h3>Simulación y Evaluación</h3>
                         <p>Modelado con Teachable Machine y sistemas de evaluación analítica inteligente.</p>

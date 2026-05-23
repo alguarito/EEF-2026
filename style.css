@@ -774,3 +774,245 @@ footer {
         font-size: 1.1rem;
     }
 }
+
+
+/* ==========================================================================
+   AURORA GLOW ORBS (MESH BACKGROUND)
+   ========================================================================== */
+.aurora-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -2;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.aurora-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    -webkit-filter: blur(120px);
+    opacity: 0.07; /* Muy sutil sobre modo claro */
+    pointer-events: none;
+    mix-blend-mode: multiply;
+}
+
+.orb-1 {
+    width: 600px;
+    height: 600px;
+    background: var(--color-primary);
+    top: -200px;
+    left: -200px;
+    animation: float-orb 25s infinite alternate ease-in-out;
+}
+
+.orb-2 {
+    width: 700px;
+    height: 700px;
+    background: var(--color-secondary);
+    bottom: -250px;
+    right: -150px;
+    animation: float-orb 30s infinite alternate-reverse ease-in-out;
+}
+
+.orb-3 {
+    width: 450px;
+    height: 450px;
+    background: #E040FB; /* Tono magenta/púrpura suave */
+    top: 35%;
+    left: 45%;
+    animation: float-orb 22s infinite alternate ease-in-out;
+}
+
+@keyframes float-orb {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+    50% {
+        transform: translate(90px, 60px) scale(1.1);
+    }
+    100% {
+        transform: translate(-50px, 100px) scale(0.95);
+    }
+}
+
+
+/* ==========================================================================
+   FUTURISTIC HERO & BOHR ATOM SIMULATOR
+   ========================================================================== */
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1.25fr 0.75fr;
+    gap: 4rem;
+    align-items: center;
+    text-align: left;
+}
+
+@media (max-width: 992px) {
+    .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    .hero-simulator-container {
+        margin: 3rem auto 0;
+    }
+}
+
+.hero-badge {
+    display: inline-block;
+    padding: 0.4rem 1.1rem;
+    background: rgba(51, 181, 229, 0.08);
+    border: 1px solid rgba(51, 181, 229, 0.25);
+    color: var(--color-secondary);
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 12px rgba(51, 181, 229, 0.06);
+}
+
+/* Bohr Atom and Waves Simulator CSS */
+.hero-simulator-container {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 50%;
+    border: 1px solid rgba(51, 181, 229, 0.25);
+    box-shadow: 0 15px 35px rgba(0, 61, 109, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: var(--transition-smooth);
+}
+
+.hero-simulator-container:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 25px 45px rgba(0, 61, 109, 0.12);
+    border-color: rgba(51, 181, 229, 0.45);
+}
+
+/* Bohr Atom model */
+.bohr-atom {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nucleus {
+    width: 26px;
+    height: 26px;
+    background: var(--gradient-brand);
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(51, 181, 229, 0.7);
+    z-index: 10;
+    animation: pulse-nucleus 2s infinite ease-in-out;
+}
+
+@keyframes pulse-nucleus {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(51, 181, 229, 0.6); }
+    50% { transform: scale(1.15); box-shadow: 0 0 25px rgba(51, 181, 229, 0.9); }
+}
+
+.orbit {
+    position: absolute;
+    border: 1px dashed rgba(0, 61, 109, 0.15);
+    border-radius: 50%;
+    animation: orbit-rotate linear infinite;
+}
+
+.orbit-1 {
+    width: 90px;
+    height: 90px;
+    animation-duration: 6s;
+}
+
+.orbit-2 {
+    width: 150px;
+    height: 150px;
+    transform: rotateX(70deg) rotateY(20deg);
+    animation-duration: 10s;
+}
+
+.orbit-3 {
+    width: 210px;
+    height: 210px;
+    transform: rotateX(-65deg) rotateY(45deg);
+    animation-duration: 14s;
+}
+
+.electron {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--color-primary);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--color-primary);
+    top: 0;
+    left: 50%;
+    margin-left: -4px;
+}
+
+.orbit-2 .electron { background: var(--color-secondary); box-shadow: 0 0 10px var(--color-secondary); }
+.orbit-3 .electron { background: #E040FB; box-shadow: 0 0 10px #E040FB; }
+
+@keyframes orbit-rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+/* ==========================================================================
+   PRISM REFRACTIVE BORDERS & FLOATING ICONS
+   ========================================================================== */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(to right, #33B5E5 0%, #003D6D 40%, #E040FB 75%, #33B5E5 100%);
+    background-size: 200% auto;
+    transition: var(--transition-smooth);
+    opacity: 0.85;
+}
+
+.card:hover::before {
+    background-position: right center;
+}
+
+.card-icon-container {
+    width: 54px;
+    height: 54px;
+    background: rgba(51, 181, 229, 0.06);
+    border: 1px solid rgba(51, 181, 229, 0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    color: var(--color-secondary);
+    transition: var(--transition-smooth);
+    box-shadow: var(--shadow-sm);
+}
+
+.card:hover .card-icon-container {
+    background: var(--gradient-brand);
+    color: var(--color-white);
+    transform: translateY(-4px) rotate(5deg);
+    box-shadow: 0 6px 15px rgba(51, 181, 229, 0.35);
+}
+
