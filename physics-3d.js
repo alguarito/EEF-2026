@@ -172,8 +172,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Flag to recalculate mesh normals and vertices
         positionAttribute.needsUpdate = true;
 
-        // 4. Update Telemetry text in case the user hovers space-time
-        const isBohrActive = document.getElementById('sim-bohr').classList.contains('active');
+        // 4. Update Telemetry text in case the user hovers space-time (null-safe check)
+        const simBohrEl = document.getElementById('sim-bohr');
+        const isBohrActive = simBohrEl ? simBohrEl.classList.contains('active') : false;
         if (isMouseOver && !isBohrActive && telemetryText) {
             const distFromCenter = Math.sqrt(lerpedMouse3D.x**2 + lerpedMouse3D.y**2);
             if (distFromCenter < 900) {
