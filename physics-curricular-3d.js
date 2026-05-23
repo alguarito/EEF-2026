@@ -41,12 +41,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const gridMesh = new THREE.Mesh(geometry, meshMaterial);
     scene.add(gridMesh);
 
-    // Glowing purple node points at each grid intersection
+    // Glowing blue node points (matching the first segment) at each grid intersection
     const pointsMaterial = new THREE.PointsMaterial({
-        color: 0xA855F7, // Morado/Púrpura Accent
+        color: 0x003D6D, // Azul UTP (matching the first block)
         size: 0.08,
         transparent: true,
-        opacity: 0.45,
+        opacity: 0.5,
         depthWrite: false
     });
     const gridPoints = new THREE.Points(geometry, pointsMaterial);
