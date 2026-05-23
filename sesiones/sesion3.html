@@ -7,25 +7,26 @@
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Estilos específicos de la consola interactiva de NotebookLM */
+        /* Estilos específicos de la consola interactiva de NotebookLM - ESTÉTICA LIGHT PREMIUM */
         .studio-console {
-            background: #0f172a; /* Azul pizarra oscuro */
+            background: rgba(255, 255, 255, 0.7); /* Vidrio blanco translúcido */
+            backdrop-filter: blur(15px);
             border-radius: var(--radius-md);
-            border: 1px solid rgba(51, 181, 229, 0.2);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            color: #f1f5f9;
+            border: 1px solid rgba(51, 181, 229, 0.25);
+            box-shadow: 0 20px 40px rgba(0, 61, 109, 0.08); /* Sombra suave azulada */
+            color: var(--color-dark);
             overflow: hidden;
             margin: 3rem 0;
             text-align: left;
         }
         
         .console-header {
-            background: #1e293b;
+            background: rgba(244, 247, 246, 0.9);
             padding: 1rem 1.5rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
         }
         
         .dots-wrapper {
@@ -38,14 +39,14 @@
             height: 12px;
             border-radius: 50%;
         }
-        .dot-red { background: #ef4444; }
-        .dot-yellow { background: #eab308; }
-        .dot-green { background: #22c55e; }
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27c93f; }
         
         .console-title {
             font-size: 0.85rem;
             font-weight: 600;
-            color: #94a3b8;
+            color: var(--color-secondary);
             letter-spacing: 0.5px;
         }
         
@@ -63,7 +64,7 @@
         
         .pane {
             padding: 1.5rem;
-            border-right: 1px solid rgba(255,255,255,0.05);
+            border-right: 1px solid rgba(0, 0, 0, 0.06);
         }
         .pane:last-child {
             border-right: none;
@@ -73,7 +74,7 @@
             font-size: 0.8rem;
             text-transform: uppercase;
             font-weight: 700;
-            color: var(--color-primary);
+            color: var(--color-secondary);
             margin-bottom: 1.2rem;
             letter-spacing: 1px;
             display: flex;
@@ -83,8 +84,8 @@
         
         /* Panel Fuentes */
         .source-item {
-            background: #1e293b;
-            border: 1px solid rgba(255,255,255,0.05);
+            background: var(--color-white);
+            border: 1px solid rgba(0, 0, 0, 0.06);
             border-radius: 8px;
             padding: 0.8rem;
             margin-bottom: 0.8rem;
@@ -92,6 +93,7 @@
             align-items: center;
             gap: 10px;
             font-size: 0.8rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
         
         .source-icon {
@@ -101,27 +103,31 @@
         
         /* Panel Chat */
         .chat-bubble {
-            background: #1e293b;
+            background: var(--color-white);
             border-radius: 8px;
             padding: 1rem;
             font-size: 0.85rem;
             margin-bottom: 1rem;
             border-left: 3px solid var(--color-primary);
             line-height: 1.4;
+            color: var(--color-dark);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
         }
         
         .chat-bubble.ai {
-            background: rgba(51, 181, 229, 0.05);
+            background: rgba(34, 197, 94, 0.04);
             border-left-color: #22c55e;
+            color: #1b4332;
         }
         
         /* Panel Studio */
         .audio-player-mockup {
-            background: rgba(255,255,255,0.02);
-            border: 1px dashed rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px dashed rgba(51, 181, 229, 0.4);
             border-radius: 8px;
             padding: 1rem;
             text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
         }
         
         .waveform {
@@ -415,13 +421,13 @@
                             <div class="pane-title">
                                 <i class="fas fa-file-upload"></i> PASO 1: FUENTES (.MD)
                             </div>
-                            <p style="font-size: 0.8rem; margin-bottom: 1rem; color: #94a3b8;">
+                            <p style="font-size: 0.8rem; margin-bottom: 1rem; color: #64748b;">
                                 Sube la Planeación Curricular Maestra para establecer el contexto pedagógico.
                             </p>
                             <div class="source-item">
                                 <i class="fas fa-file-alt source-icon"></i>
                                 <div>
-                                    <div style="font-weight: 600; color: #e2e8f0;">PLANEACION_FISICA.md</div>
+                                    <div style="font-weight: 600; color: var(--color-secondary);">PLANEACION_FISICA.md</div>
                                     <div style="font-size: 0.7rem; color: #64748b;">2.8 KB • Cargado</div>
                                 </div>
                             </div>
@@ -432,19 +438,19 @@
                         </div>
 
                         <!-- Panel Chat (Paso 2) -->
-                        <div class="pane" style="background: rgba(255, 255, 255, 0.01);">
+                        <div class="pane" style="background: rgba(0, 0, 0, 0.015);">
                             <div class="pane-title">
                                 <i class="fas fa-comments"></i> PASO 2: CHAT & PROMPTS
                             </div>
                             <div class="chat-bubble">
-                                <span style="font-weight: 700; color: var(--color-primary); font-size: 0.7rem; text-transform: uppercase;">Docente (Prompt 2):</span>
-                                <p style="font-size: 0.75rem; color: #cbd5e1; margin-top: 2px;">
+                                <span style="font-weight: 700; color: var(--color-secondary); font-size: 0.7rem; text-transform: uppercase;">Docente (Prompt 2):</span>
+                                <p style="font-size: 0.75rem; color: #334155; margin-top: 2px;">
                                     "Basado en la Fase 4 de este documento, ayúdame a redactar un prompt avanzado para Gemini..."
                                 </p>
                             </div>
                             <div class="chat-bubble ai">
                                 <span style="font-weight: 700; color: #22c55e; font-size: 0.7rem; text-transform: uppercase;">NotebookLM Consultor:</span>
-                                <p style="font-size: 0.75rem; color: #cbd5e1; margin-top: 2px;">
+                                <p style="font-size: 0.75rem; color: #1b4332; margin-top: 2px;">
                                     "Aquí tienes la estructura de sistema para tu tutor: <em>'Actúa como un Diseñador Instruccional Senior. Vincula la Fase 3 ética con el MEN...'</em>"
                                 </p>
                             </div>
@@ -455,11 +461,11 @@
                             <div class="pane-title">
                                 <i class="fas fa-sliders-h"></i> PASO 3: STUDIO (MULTIMEDIA)
                             </div>
-                            <p style="font-size: 0.8rem; margin-bottom: 1rem; color: #94a3b8;">
+                            <p style="font-size: 0.8rem; margin-bottom: 1rem; color: #64748b;">
                                 Genera audio resúmenes ultra realistas discutiendo el marco.
                             </p>
                             <div class="audio-player-mockup">
-                                <span style="font-size: 0.7rem; font-weight: 700; color: #94a3b8; display: block; text-transform: uppercase;">Audio Overview</span>
+                                <span style="font-size: 0.7rem; font-weight: 700; color: #64748b; display: block; text-transform: uppercase;">Audio Overview</span>
                                 <div class="waveform">
                                     <div class="bar"></div>
                                     <div class="bar"></div>
@@ -472,7 +478,7 @@
                                 </div>
                                 <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
                                     <i class="fas fa-play" style="color: var(--color-primary); font-size: 0.8rem;"></i>
-                                    <span style="font-size: 0.75rem; color: #e2e8f0; font-family: monospace;">08:12 / 12:43 min</span>
+                                    <span style="font-size: 0.75rem; color: var(--color-secondary); font-family: monospace; font-weight: 600;">08:12 / 12:43 min</span>
                                 </div>
                             </div>
                         </div>
