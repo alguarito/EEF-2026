@@ -40,4 +40,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // Back to top button functionality
+    const scrollTopBtn = document.getElementById('scroll-top-btn');
+    if (scrollTopBtn) {
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
 });
