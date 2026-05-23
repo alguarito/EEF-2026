@@ -76,18 +76,83 @@
                         </div>
                     </div>
                     
-                    <!-- Column 2: 3D Bohr Atom CSS Simulator (WOW Factor!) -->
-                    <div class="hero-simulator-container">
-                        <div class="bohr-atom">
-                            <div class="nucleus"></div>
-                            <div class="orbit orbit-1">
-                                <div class="electron"></div>
+                    <!-- Column 2: Interactive Quantum Lab Console (WOW Factor!) -->
+                    <div class="quantum-lab-card">
+                        <!-- Lab Header / Telemetry Display -->
+                        <div class="lab-telemetry">
+                            <span class="telemetry-badge"><i class="fas fa-microscope"></i> Lab Virtual EEF</span>
+                            <span class="telemetry-status" id="lab-telemetry-text">Bohr: Fundamental (n=1)</span>
+                        </div>
+                        
+                        <!-- Screen Area (Displays active simulation) -->
+                        <div class="lab-screen">
+                            <!-- Simulation 1: Bohr Atom (Interactive) -->
+                            <div class="sim-view active" id="sim-bohr">
+                                <div class="bohr-atom-interactive">
+                                    <div class="nucleus-interactive" id="nucleus-active">+</div>
+                                    <!-- Orbit 1 -->
+                                    <div class="orbit-interactive orbit-i1 active-orbit" data-orbit="1" title="Órbita n=1">
+                                        <span class="orbit-label">n=1 (Fundamental)</span>
+                                    </div>
+                                    <!-- Orbit 2 -->
+                                    <div class="orbit-interactive orbit-i2" data-orbit="2" title="Órbita n=2">
+                                        <span class="orbit-label">n=2 (Excitado 1)</span>
+                                    </div>
+                                    <!-- Orbit 3 -->
+                                    <div class="orbit-interactive orbit-i3" data-orbit="3" title="Órbita n=3">
+                                        <span class="orbit-label">n=3 (Excitado 2)</span>
+                                    </div>
+                                    <!-- Electron (wrapper that rotates, and electron that shifts radius) -->
+                                    <div class="electron-wrapper" id="electron-wrapper-id">
+                                        <div class="electron-interactive level-1" id="electron-active"></div>
+                                    </div>
+                                    <!-- Photon Wave Packet (Hidden by default, animated on emission) -->
+                                    <div class="photon-wave" id="photon-wave">
+                                        <svg viewBox="0 0 100 20" class="photon-svg">
+                                            <path d="M 0,10 Q 12.5,0 25,10 T 50,10 T 75,10 T 100,10" fill="none" stroke="#33B5E5" stroke-width="2.5" />
+                                        </svg>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="orbit orbit-2">
-                                <div class="electron"></div>
+                            
+                            <!-- Simulation 2: Wave Interference (Real-time Canvas) -->
+                            <div class="sim-view" id="sim-waves">
+                                <canvas id="wave-canvas"></canvas>
                             </div>
-                            <div class="orbit orbit-3">
-                                <div class="electron"></div>
+                        </div>
+                        
+                        <!-- Lab Controls Panel -->
+                        <div class="lab-controls">
+                            <!-- Bohr Atom Controls -->
+                            <div class="controls-group active" id="controls-bohr">
+                                <div class="btn-row">
+                                    <button class="lab-btn" id="btn-excite"><i class="fas fa-bolt"></i> Excitar (n=3)</button>
+                                    <button class="lab-btn btn-accent" id="btn-emit"><i class="fas fa-lightbulb"></i> Emitir Fotón</button>
+                                </div>
+                                <div class="slider-row">
+                                    <label>Velocidad Órbita <span id="val-bohr-speed">1.25x</span></label>
+                                    <input type="range" id="slider-bohr-speed" min="1" max="5" value="2" class="lab-slider">
+                                </div>
+                            </div>
+                            
+                            <!-- Wave Controls -->
+                            <div class="controls-group" id="controls-waves">
+                                <div class="sliders-grid">
+                                    <div class="slider-row">
+                                        <label>Frecuencia: <span id="val-freq">2.0 Hz</span></label>
+                                        <input type="range" id="slider-freq" min="0.5" max="4" step="0.1" value="2.0" class="lab-slider">
+                                    </div>
+                                    <div class="slider-row">
+                                        <label>Desfase: <span id="val-phase">0°</span></label>
+                                        <input type="range" id="slider-phase" min="0" max="360" step="15" value="0" class="lab-slider">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Tab Selectors -->
+                            <div class="lab-tabs">
+                                <button class="lab-tab-btn active" data-target="bohr"><i class="fas fa-atom"></i> Átomo Bohr</button>
+                                <button class="lab-tab-btn" data-target="waves"><i class="fas fa-wave-square"></i> Superposición</button>
                             </div>
                         </div>
                     </div>
