@@ -116,12 +116,25 @@ document.addEventListener('DOMContentLoaded', () => {
         targetMouse3D.set(999, 999, 0);
     });
 
+    // --- Performance Optimization: Viewport Frustum Visibility Check ---
+    let isHeroInViewport = true;
+    const observerOptions = { root: null, threshold: 0.05 };
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            isHeroInViewport = entry.isIntersecting;
+        });
+    }, observerOptions);
+    sectionObserver.observe(heroSection);
+
     // --- Clock for gravitational waves animation ---
     const clock = new THREE.Clock();
 
     // --- Render Loop (60fps) ---
     function animate() {
         requestAnimationFrame(animate);
+
+        // Performance check: stop render loops when hero is scrolled out of viewport
+        if (!isHeroInViewport) return;
 
         const time = clock.getElapsedTime();
 

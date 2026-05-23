@@ -84,41 +84,125 @@
 
         <!-- Modules Section -->
         <section class="modules" id="curricular">
-            <div class="container">
+            <!-- 3D WebGL Quantum Particle Vortex Canvas Container -->
+            <div id="curricular-canvas-container"></div>
+            
+            <div class="container" style="position: relative; z-index: 2;">
                 <h2 class="section-title">Nuestra Propuesta Curricular</h2>
+                <p style="text-align: center; max-width: 800px; margin: -2rem auto 4rem; opacity: 0.85; font-weight: 500;">
+                    Un recorrido estructurado de 10 sesiones de frontera para dominar la inteligencia artificial y las tecnologías educativas avanzadas aplicadas a la enseñanza de la física.
+                </p>
+                
                 <div class="grid">
-                    <div class="card glass">
+                    <!-- Session 1 -->
+                    <a href="sesiones/sesion1.html" class="card glass session-card" data-session-index="0">
                         <div class="card-icon-container">
                             <i class="fas fa-brain"></i>
                         </div>
-                        <div class="module-number">Módulo 1</div>
-                        <h3>Introducción e IA</h3>
-                        <p>Fundamentos de la IA en educación física y creación de ecosistemas inteligentes con Gemini.</p>
-                    </div>
-                    <div class="card glass">
+                        <div class="session-badge">Sesión 01</div>
+                        <h3>S1: Fundamentos de IA</h3>
+                        <p>Bases de prompt engineering y el ecosistema de Gemini como asistente docente de física.</p>
+                        <span class="session-category cat-fundamentals">Fundamentos</span>
+                    </a>
+                    
+                    <!-- Session 2 -->
+                    <a href="sesiones/sesion2.html" class="card glass session-card" data-session-index="1">
                         <div class="card-icon-container">
-                            <i class="fas fa-glasses"></i>
+                            <i class="fas fa-cogs"></i>
                         </div>
-                        <div class="module-number">Módulo 2</div>
-                        <h3>Diseño y Curaduría</h3>
-                        <p>Uso de NotebookLM para síntesis documental y generación de recursos gráficos con Imagen 3.</p>
-                    </div>
-                    <div class="card glass">
+                        <div class="session-badge">Sesión 02</div>
+                        <h3>S2: Ecosistemas Inteligentes</h3>
+                        <p>Curaduría de contenidos y diseño instruccional automatizado con modelos de lenguaje.</p>
+                        <span class="session-category cat-curator">Curaduría</span>
+                    </a>
+                    
+                    <!-- Session 3 -->
+                    <a href="sesiones/sesion3.html" class="card glass session-card" data-session-index="2">
                         <div class="card-icon-container">
-                            <i class="fas fa-photo-video"></i>
+                            <i class="fas fa-headphones"></i>
                         </div>
-                        <div class="module-number">Módulo 3</div>
-                        <h3>Multimedia Asistida</h3>
-                        <p>Producción de video con Google Vids y exploración móvil con Gemini Live.</p>
-                    </div>
-                    <div class="card glass">
+                        <div class="session-badge">Sesión 03</div>
+                        <h3>S3: Síntesis (NotebookLM)</h3>
+                        <p>Análisis de fuentes complejas y generación de podcasts explicativos automáticos.</p>
+                        <span class="session-category cat-curator">Curaduría</span>
+                    </a>
+                    
+                    <!-- Session 4 -->
+                    <a href="sesiones/sesion4.html" class="card glass session-card" data-session-index="3">
                         <div class="card-icon-container">
-                            <i class="fas fa-microscope"></i>
+                            <i class="fas fa-paint-brush"></i>
                         </div>
-                        <div class="module-number">Módulo 4</div>
-                        <h3>Simulación y Evaluación</h3>
-                        <p>Modelado con Teachable Machine y sistemas de evaluación analítica inteligente.</p>
-                    </div>
+                        <div class="session-badge">Sesión 04</div>
+                        <h3>S4: Estructuración Visual</h3>
+                        <p>Creación de ilustraciones científicas y analogías visuales personalizadas con Imagen 3.</p>
+                        <span class="session-category cat-multimedia">Multimedia</span>
+                    </a>
+                    
+                    <!-- Session 5 -->
+                    <a href="sesiones/sesion5.html" class="card glass session-card" data-session-index="4">
+                        <div class="card-icon-container">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="session-badge">Sesión 05</div>
+                        <h3>S5: Agentes Interactivos</h3>
+                        <p>Programación de tutores y chatbots especializados en resolución de problemas de física.</p>
+                        <span class="session-category cat-stem">STEM</span>
+                    </a>
+                    
+                    <!-- Session 6 -->
+                    <a href="sesiones/sesion6.html" class="card glass session-card" data-session-index="5">
+                        <div class="card-icon-container">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="session-badge">Sesión 06</div>
+                        <h3>S6: Guionización Multimedia</h3>
+                        <p>Diseño de guiones instruccionales interactivos y storyboards para explicaciones físicas.</p>
+                        <span class="session-category cat-multimedia">Multimedia</span>
+                    </a>
+                    
+                    <!-- Session 7 -->
+                    <a href="sesiones/sesion7.html" class="card glass session-card" data-session-index="6">
+                        <div class="card-icon-container">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <div class="session-badge">Sesión 07</div>
+                        <h3>S7: Producción de Video</h3>
+                        <p>Generación de videos instruccionales automáticos y simulaciones de física con avatares de IA.</p>
+                        <span class="session-category cat-multimedia">Multimedia</span>
+                    </a>
+                    
+                    <!-- Session 8 -->
+                    <a href="sesiones/sesion8.html" class="card glass session-card" data-session-index="7">
+                        <div class="card-icon-container">
+                            <i class="fas fa-microphone"></i>
+                        </div>
+                        <div class="session-badge">Sesión 08</div>
+                        <h3>S8: Asistencia (Gemini Live)</h3>
+                        <p>Uso interactivo por voz de Gemini Live para resolver dudas de laboratorios en tiempo real.</p>
+                        <span class="session-category cat-stem">STEM</span>
+                    </a>
+                    
+                    <!-- Session 9 -->
+                    <a href="sesiones/sesion9.html" class="card glass session-card" data-session-index="8">
+                        <div class="card-icon-container">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <div class="session-badge">Sesión 09</div>
+                        <h3>S9: Simulaciones y STEM</h3>
+                        <p>Laboratorios virtuales de física con simuladores PhET y codificación interactiva.</p>
+                        <span class="session-category cat-stem">STEM</span>
+                    </a>
+                    
+                    <!-- Session 10 -->
+                    <a href="sesiones/sesion10.html" class="card glass session-card" data-session-index="9">
+                        <div class="card-icon-container">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="session-badge">Sesión 10</div>
+                        <h3>S10: Evaluación Inteligente</h3>
+                        <p>Diseño de rúbricas analíticas, retroalimentación adaptativa y analítica de datos con IA.</p>
+                        <span class="session-category cat-evaluation">Evaluación</span>
+                    </a>
                 </div>
             </div>
         </section>
@@ -288,6 +372,8 @@
 
     <!-- 3D Physics WebGL spacetime gravity warp script -->
     <script src="physics-3d.js"></script>
+    <!-- 3D WebGL physics-curricular-3d vortex script -->
+    <script src="physics-curricular-3d.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
