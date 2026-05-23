@@ -323,6 +323,7 @@ header.scrolled {
     background: transparent;
 }
 
+.canvas-bg-container,
 #recursos-canvas-container {
     position: absolute;
     top: 0;
@@ -333,6 +334,7 @@ header.scrolled {
     pointer-events: none;
 }
 
+.canvas-bg-container canvas,
 #recursos-canvas-container canvas {
     display: block;
     width: 100%;
