@@ -16,6 +16,9 @@
         <div class="aurora-orb orb-3"></div>
     </div>
 
+    <!-- 3D WebGL Crystalline Information Blocks Canvas Container -->
+    <div id="session2-canvas-container" class="canvas-bg-fixed"></div>
+
     <header class="glass">
         <div class="container">
             <nav class="nav-wrapper">
@@ -48,7 +51,7 @@
         </div>
     </header>
 
-    <main>
+    <main style="position: relative; z-index: 2;">
         <!-- Hero Section Masterpiece Style -->
         <section class="session-hero hero" style="padding: 6rem 0 4rem;">
             <div class="container">
@@ -253,6 +256,10 @@
         </div>
     </footer>
 
+    <!-- Three.js CDN Library for WebGL 3D -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- 3D WebGL Crystalline Information Blocks Script -->
+    <script src="physics-sesion2-3d.js"></script>
     <script src="../app.js"></script>
 </body>
 </html>
