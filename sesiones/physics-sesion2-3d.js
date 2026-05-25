@@ -114,6 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentRotationY = 0;
 
     const mouse2D = new THREE.Vector2(999, 999); // Offscreen initially
+    const targetMouse3D = new THREE.Vector3(999, 999, 0); // Declared missing variable for mouse raycasting
     const targetPlane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
     const raycaster = new THREE.Raycaster();
 
@@ -211,8 +212,10 @@ document.addEventListener('DOMContentLoaded', () => {
             raycaster.ray.intersectPlane(targetPlane, targetMouse3D);
             
             if (isHovered) {
-                lerpedAttractor3D.lerp(targetMouse3D, 0.08);
+                // Lerp towards the active card's unprojected center coordinate
+                lerpedAttractor3D.lerp(attractorTarget3D, 0.08);
             } else {
+                // Return to hover mouse pointer coordinates
                 lerpedAttractor3D.lerp(targetMouse3D, 0.05);
             }
             // keep depth locked
@@ -267,7 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const By = (dyN / Math.pow(rN, 3)) - (dyS / Math.pow(rS, 3));
 
                 targetAngle = Math.atan2(By, Bx);
-                dist = Math.sqrt((needle.cx - lerpedMouse3D.x)**2 + (needle.cy - lerpedMouse3D.y)**2);
+                dist = Math.sqrt((needle.cx - lerpedAttractor3D.x)**2 + (needle.cy - lerpedAttractor3D.y)**2);
             } else {
                 // REPOSE MODE: Needles oscillate slowly in undulating electromagnetic energy waves
                 targetAngle = Math.sin(needle.cx * 0.15 + needle.cy * 0.15 - time * 0.85) * 0.45;
