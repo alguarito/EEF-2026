@@ -1,7 +1,7 @@
 // ==========================================================================
-// 3D CRYSTALLINE BLOCKS SIMULATOR (Three.js WebGL)
+// 3D ELECTROMAGNETIC VECTOR FIELD SIMULATOR (Three.js WebGL)
 // Especialización en la Enseñanza de la Física - UTP
-// Sesión 2: Ecosistemas Inteligentes y Arquitectura Web (El Aula Ubicua)
+// Sesión 2: Ecosistemas Inteligentes y Arquitectura Web
 // ==========================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -21,96 +21,101 @@ document.addEventListener('DOMContentLoaded', () => {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
-    // --- Geometric Crystalline Modules Setup ---
-    const crystalCount = 8;
-    const crystals = [];
-    const restPositions = [];
-    const velocities = [];
+    // --- Grid Layout of Vector Needles ---
+    const cols = 22;
+    const rows = 15;
+    const spacingX = 1.7;
+    const spacingY = 1.35;
+    const lineCount = cols * rows;
+    
+    const needles = [];
+    
+    // Compiling all vector lines in a single BufferGeometry for maximum GPU rendering efficiency
+    const lineGeometry = new THREE.BufferGeometry();
+    const linePositions = new Float32Array(lineCount * 2 * 3); // 2 vertices per segment, 3 coordinates per vertex
+    const lineColors = new Float32Array(lineCount * 2 * 3);
 
-    // Distinct geometric polyhedra representing units of information
-    const geometries = [
-        new THREE.IcosahedronGeometry(0.85, 0),
-        new THREE.OctahedronGeometry(0.95, 0),
-        new THREE.TetrahedronGeometry(1.05, 0),
-        new THREE.BoxGeometry(0.8, 0.8, 0.8)
-    ];
+    // Compiling glowing tip nodes for each needle vector
+    const pointsGeometry = new THREE.BufferGeometry();
+    const pointsPositions = new Float32Array(lineCount * 3); // 1 point per needle, 3 coordinates
 
-    // Glassmorphic materials
-    const coreMaterial = new THREE.MeshBasicMaterial({
-        color: 0x003D6D, // Azul UTP
-        transparent: true,
-        opacity: 0.14,
-        depthWrite: false
-    });
+    // Color definitions
+    const colorTail = new THREE.Color(0x003D6D); // Azul UTP
+    const colorTip = new THREE.Color(0x33B5E5);  // Cian UTP
+    
+    const glowColorTail = new THREE.Color(0x1EA6D9); // Glowing intermediate cian
+    const glowColorTip = new THREE.Color(0xffffff);  // Incandescent white-cyan
 
-    const shellMaterial = new THREE.MeshBasicMaterial({
-        color: 0x33B5E5, // Cian UTP
-        wireframe: true,
-        transparent: true,
-        opacity: 0.42,
-        depthWrite: false
-    });
+    // Initialize positions and gradient colors inside buffer arrays
+    let needleIdx = 0;
+    for (let c = 0; c < cols; c++) {
+        for (let r = 0; r < rows; r++) {
+            const cx = (c - (cols - 1) / 2) * spacingX;
+            const cy = (r - (rows - 1) / 2) * spacingY;
+            const cz = -2.0; // Placed slightly behind cards for deep glass depth of field
 
-    const crystalGroup = new THREE.Group();
-    scene.add(crystalGroup);
+            needles.push({
+                cx: cx,
+                cy: cy,
+                cz: cz,
+                currentAngle: Math.random() * Math.PI * 2,
+                index: needleIdx
+            });
 
-    for (let i = 0; i < crystalCount; i++) {
-        const geo = geometries[i % geometries.length];
+            // Set static gradient colors: tail is UTP blue, tip is cian UTP
+            const colorVertOffset = needleIdx * 6;
+            lineColors[colorVertOffset] = colorTail.r;
+            lineColors[colorVertOffset + 1] = colorTail.g;
+            lineColors[colorVertOffset + 2] = colorTail.b;
 
-        // Construct dual-layer holographic crystal
-        const core = new THREE.Mesh(geo, coreMaterial);
-        const shell = new THREE.Mesh(geo, shellMaterial);
+            lineColors[colorVertOffset + 3] = colorTip.r;
+            lineColors[colorVertOffset + 4] = colorTip.g;
+            lineColors[colorVertOffset + 5] = colorTip.b;
 
-        const group = new THREE.Group();
-        group.add(core);
-        group.add(shell);
-
-        // Distribute in a beautiful floating volume
-        const x = (Math.random() - 0.5) * 26;
-        const y = (Math.random() - 0.5) * 16;
-        const z = (Math.random() - 0.5) * 4;
-
-        group.position.set(x, y, z);
-        crystalGroup.add(group);
-
-        crystals.push({
-            mesh: group,
-            restX: x,
-            restY: y,
-            restZ: z,
-            vx: 0,
-            vy: 0,
-            vz: 0,
-            rotSpeedX: (Math.random() - 0.5) * 0.012,
-            rotSpeedY: (Math.random() - 0.5) * 0.012,
-            rotSpeedZ: (Math.random() - 0.5) * 0.012
-        });
+            needleIdx++;
+        }
     }
 
-    // --- Vertical Binding Ray (Structural Laser Axis) ---
-    const lineGeo = new THREE.BufferGeometry();
-    const lineVerts = new Float32Array([0, -18, -2, 0, 18, -2]); // Spans vertical viewport
-    lineGeo.setAttribute('position', new THREE.BufferAttribute(lineVerts, 3));
-    const lineMat = new THREE.LineBasicMaterial({
-        color: 0x33B5E5, // Cian
+    lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
+    lineGeometry.setAttribute('color', new THREE.BufferAttribute(lineColors, 3));
+
+    // Material with high-tech glowing wireframe details
+    const lineMaterial = new THREE.LineBasicMaterial({
+        vertexColors: true,
         transparent: true,
-        opacity: 0.0, // Initially invisible
+        opacity: 0.25,
         depthWrite: false
     });
-    const bindingRay = new THREE.Line(lineGeo, lineMat);
-    scene.add(bindingRay);
+    const vectorFieldSegments = new THREE.LineSegments(lineGeometry, lineMaterial);
+    scene.add(vectorFieldSegments);
 
-    // --- Interactive Attraction & Physics Setup ---
+    // Glowing tip points system
+    pointsGeometry.setAttribute('position', new THREE.BufferAttribute(pointsPositions, 3));
+    const pointsMaterial = new THREE.PointsMaterial({
+        color: 0x8AD2F0, // Bright glowing cian
+        size: 0.08,
+        transparent: true,
+        opacity: 0.55,
+        depthWrite: false
+    });
+    const vectorFieldPoints = new THREE.Points(pointsGeometry, pointsMaterial);
+    scene.add(vectorFieldPoints);
+
+    // --- Interactive Attraction & Dipole Setup ---
     let attractorTarget3D = new THREE.Vector3(0, 0, -999);
     let lerpedAttractor3D = new THREE.Vector3(0, 0, -999);
     let isHovered = false;
     let activeCardIndex = -1;
 
-    // Relative mouse vectors for subtle section parallax tilt
+    // Relative mouse vectors for subtle scene parallax tilt
     let targetRotationX = 0;
     let targetRotationY = 0;
     let currentRotationX = 0;
     let currentRotationY = 0;
+
+    const mouse2D = new THREE.Vector2(999, 999); // Offscreen initially
+    const targetPlane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+    const raycaster = new THREE.Raycaster();
 
     // Map DOM 2D coordinate space of a hovered card into WebGL 3D space
     function mapCardTo3D(cardElement) {
@@ -131,12 +136,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const tempVector = new THREE.Vector3(ndcX, ndcY, 0.5);
         tempVector.unproject(camera);
         
-        // Calculate projection vector on the XY plane (where our crystals live)
+        // Calculate projection vector on the XY plane
         const dir = tempVector.sub(camera.position).normalize();
         const distance = -camera.position.z / dir.z;
         attractorTarget3D.copy(camera.position).add(dir.multiplyScalar(distance));
         
-        // Set target depth slightly behind cards
         attractorTarget3D.z = -2.0;
     }
 
@@ -147,7 +151,6 @@ document.addEventListener('DOMContentLoaded', () => {
             activeCardIndex = idx;
             mapCardTo3D(card);
             
-            // If it was previously offscreen, snap it close first
             if (lerpedAttractor3D.z < -100) {
                 lerpedAttractor3D.copy(attractorTarget3D);
             }
@@ -167,13 +170,18 @@ document.addEventListener('DOMContentLoaded', () => {
         attractorTarget3D.set(0, 0, -999); // push attractor away
     });
 
-    // Capture mouse movements over the section for camera/scene parallax tilting
+    // Capture mouse movements over the viewport for camera parallax tilting
     document.addEventListener('mousemove', (event) => {
         const px = event.clientX / window.innerWidth - 0.5;
         const py = event.clientY / window.innerHeight - 0.5;
         
         targetRotationX = py * 0.15;
         targetRotationY = px * 0.15;
+
+        // Map mouse coordinates to NDC for 3D physics raycasting
+        const rect = container.getBoundingClientRect();
+        mouse2D.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        mouse2D.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
     });
 
     // --- Performance Optimization: Viewport Visibility Check ---
@@ -197,82 +205,117 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const time = clock.getElapsedTime();
 
-        // 1. Smoothly interpolate attractor position (inertia lag)
-        if (isHovered) {
-            lerpedAttractor3D.lerp(attractorTarget3D, 0.08);
-        } else {
-            lerpedAttractor3D.lerp(attractorTarget3D, 0.05);
+        // 1. Raycast mouse to 3D XY plane
+        if (mouse2D.x < 10) {
+            raycaster.setFromCamera(mouse2D, camera);
+            raycaster.ray.intersectPlane(targetPlane, targetMouse3D);
+            
+            if (isHovered) {
+                lerpedAttractor3D.lerp(targetMouse3D, 0.08);
+            } else {
+                lerpedAttractor3D.lerp(targetMouse3D, 0.05);
+            }
+            // keep depth locked
+            lerpedAttractor3D.z = -2.0;
         }
 
-        // 2. Smoothly interpolate scene tilting (parallax)
+        // 2. Smoothly interpolate parallax tilting
         currentRotationX += (targetRotationX - currentRotationX) * 0.05;
         currentRotationY += (targetRotationY - currentRotationY) * 0.05;
         
-        crystalGroup.rotation.x = currentRotationX;
-        crystalGroup.rotation.y = currentRotationY;
-        bindingRay.rotation.x = currentRotationX;
-        bindingRay.rotation.y = currentRotationY;
+        vectorFieldSegments.rotation.x = currentRotationX;
+        vectorFieldSegments.rotation.y = currentRotationY;
+        vectorFieldPoints.rotation.x = currentRotationX;
+        vectorFieldPoints.rotation.y = currentRotationY;
 
-        // 3. Animate the vertical binding laser ray (blueprint axis)
-        if (isHovered && lerpedAttractor3D.z > -100) {
-            bindingRay.position.x = lerpedAttractor3D.x;
-            bindingRay.position.z = lerpedAttractor3D.z;
-            lineMat.opacity += (0.28 - lineMat.opacity) * 0.08; // fade in
-        } else {
-            lineMat.opacity += (0.0 - lineMat.opacity) * 0.08; // fade out
-        }
+        // 3. Deform and rotate vector needles
+        const posAttr = lineGeometry.attributes.position;
+        const colorAttr = lineGeometry.attributes.color;
+        const ptsPosAttr = pointsGeometry.attributes.position;
 
-        // 4. Update Crystals Physics: drift bounce vs snap stacking
-        const boundaryX = 16.0;
-        const boundaryY = 9.0;
-        const boundaryZ = 3.0;
+        const halfLen = 0.28; // Length of each vector segment is 0.56 units
 
-        for (let i = 0; i < crystalCount; i++) {
-            const crystal = crystals[i];
-            const mesh = crystal.mesh;
+        for (let i = 0; i < lineCount; i++) {
+            const needle = needles[i];
+            
+            let targetAngle = 0;
+            let dist = 999;
 
-            if (isHovered && lerpedAttractor3D.z > -100) {
-                // STACK MODE: Pull crystals to snap together into a vertical structural column
-                const tx = lerpedAttractor3D.x;
-                const ty = lerpedAttractor3D.y + (i - (crystalCount - 1) / 2) * 1.55; // vertical offset
-                const tz = lerpedAttractor3D.z;
+            if (isHovered && lerpedAttractor3D.x < 900) {
+                // DIPOLE PHYSICS CALCULATION:
+                // We model a vertical magnetic dipole centered at the active card.
+                // A North pole (+) is offset slightly upwards, a South pole (-) slightly downwards.
+                const dyNorthX = lerpedAttractor3D.x;
+                const dyNorthY = lerpedAttractor3D.y + 1.6;
+                
+                const dySouthX = lerpedAttractor3D.x;
+                const dySouthY = lerpedAttractor3D.y - 1.6;
 
-                // Strong spring-like snap forces
-                crystal.vx += (tx - mesh.position.x) * 0.06;
-                crystal.vy += (ty - mesh.position.y) * 0.06;
-                crystal.vz += (tz - mesh.position.z) * 0.06;
+                // North pole vector forces
+                const dxN = needle.cx - dyNorthX;
+                const dyN = needle.cy - dyNorthY;
+                const rN = Math.max(Math.sqrt(dxN*dxN + dyN*dyN), 0.85);
 
-                // Aligned, elegant synchronization spin when stacked
-                mesh.rotation.x += (0.01 - mesh.rotation.x) * 0.08;
-                mesh.rotation.y += (time * 0.65 + i * 0.15 - mesh.rotation.y) * 0.08;
-                mesh.rotation.z += (0.02 - mesh.rotation.z) * 0.08;
+                // South pole vector forces
+                const dxS = needle.cx - dySouthX;
+                const dyS = needle.cy - dySouthY;
+                const rS = Math.max(Math.sqrt(dxS*dxS + dyS*dyS), 0.85);
+
+                // Net magnetic field vector B = B_north + B_south
+                // Field lines emanate outwards from North (+) and loop inwards to South (-)
+                const Bx = (dxN / Math.pow(rN, 3)) - (dxS / Math.pow(rS, 3));
+                const By = (dyN / Math.pow(rN, 3)) - (dyS / Math.pow(rS, 3));
+
+                targetAngle = Math.atan2(By, Bx);
+                dist = Math.sqrt((needle.cx - lerpedMouse3D.x)**2 + (needle.cy - lerpedMouse3D.y)**2);
             } else {
-                // DRIFT MODE: Floating freely inside boundary constraints
-                crystal.vx += (crystal.restX - mesh.position.x) * 0.02;
-                crystal.vy += (crystal.restY - mesh.position.y) * 0.02;
-                crystal.vz += (crystal.restZ - mesh.position.z) * 0.02;
-
-                // Drifting boundaries check (bouncing edges off viewport volume)
-                if (Math.abs(mesh.position.x) > boundaryX) crystal.vx *= -1;
-                if (Math.abs(mesh.position.y) > boundaryY) crystal.vy *= -1;
-                if (Math.abs(mesh.position.z) > boundaryZ) crystal.vz *= -1;
-
-                // Slow, independent random rotations
-                mesh.rotation.x += crystal.rotSpeedX;
-                mesh.rotation.y += crystal.rotSpeedY;
-                mesh.rotation.z += crystal.rotSpeedZ;
+                // REPOSE MODE: Needles oscillate slowly in undulating electromagnetic energy waves
+                targetAngle = Math.sin(needle.cx * 0.15 + needle.cy * 0.15 - time * 0.85) * 0.45;
             }
 
-            // Apply friction/drag to prevent infinite speeds
-            crystal.vx *= 0.86;
-            crystal.vy *= 0.86;
-            crystal.vz *= 0.86;
+            // Smooth angular interpolation (shortest path rotation to prevent wild spinning)
+            let diff = targetAngle - needle.currentAngle;
+            diff = Math.atan2(Math.sin(diff), Math.cos(diff));
+            needle.currentAngle += diff * 0.08;
 
-            // Apply calculated velocity adjustments
-            mesh.position.x += crystal.vx;
-            mesh.position.y += crystal.vy;
-            mesh.position.z += crystal.vz;
+            // Calculate exact needle segment end coordinates in 3D XY space
+            const cos = Math.cos(needle.currentAngle);
+            const sin = Math.sin(needle.currentAngle);
+
+            const px1 = needle.cx - halfLen * cos;
+            const py1 = needle.cy - halfLen * sin;
+            
+            const px2 = needle.cx + halfLen * cos;
+            const py2 = needle.cy + halfLen * sin;
+
+            // Write vertices to segment positions
+            posAttr.setXYZ(i * 2, px1, py1, needle.cz);
+            posAttr.setXYZ(i * 2 + 1, px2, py2, needle.cz);
+
+            // Write tip vertex to glowing point system
+            ptsPosAttr.setXYZ(i, px2, py2, needle.cz);
+
+            // Animate electromagnetic glow (incandescence) based on dipole proximity
+            const colorVertOffset = i * 6;
+            if (isHovered && lerpedAttractor3D.x < 900) {
+                const maxGlowRadius = 7.5;
+                const intensity = Math.max(1.0 - dist / maxGlowRadius, 0.0);
+
+                // Linearly interpolate tail/tip color values to glowing white-cyan
+                const cTail = new THREE.Color().copy(colorTail).lerp(glowColorTail, intensity);
+                const cTip = new THREE.Color().copy(colorTip).lerp(glowColorTip, intensity);
+
+                colorAttr.setXYZ(i * 2, cTail.r, cTail.g, cTail.b);
+                colorAttr.setXYZ(i * 2 + 1, cTip.r, cTip.g, cTip.b);
+            } else {
+                colorAttr.setXYZ(i * 2, colorTail.r, colorTail.g, colorTail.b);
+                colorAttr.setXYZ(i * 2 + 1, colorTip.r, colorTip.g, colorTip.b);
+            }
         }
+        
+        posAttr.needsUpdate = true;
+        colorAttr.needsUpdate = true;
+        ptsPosAttr.needsUpdate = true;
 
         renderer.render(scene, camera);
     }
@@ -287,11 +330,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.addEventListener('resize', handleResize);
-
-    // Re-check card layouts on window resize to map coordinates perfectly
-    window.addEventListener('resize', () => {
-        if (activeCardIndex !== -1 && interactiveElements[activeCardIndex]) {
-            mapCardTo3D(interactiveElements[activeCardIndex]);
-        }
-    });
 });
